@@ -1,33 +1,40 @@
-import os
-import configparser
-import telebot
-import requests
-
-config = configparser.ConfigParser()
-config.read('config.ini')
-TOKEN=config.get("DEFAULT", "TOKEN")
-user_id=config.get("DEFAULT", "user_id")
-print(TOKEN)
-
-bot = telebot.TeleBot(TOKEN)
+from datetime import datetime
+import json
+from datetime import datetime
 
 
-@bot.message_handler(content_types=['text'])
-def get_text_messages(message):
-    if message.text == "help":
-        bot.send_message(message.from_user.id, " You can use commands:\n help\n lowprice\n highprice\n bestdeal\n history")
-    elif message.text == "lowprice":
-        bot.send_message(message.from_user.id, "you input - lowprice")
-        #bot.send_message(message.from_user.id, lowprice())
-    elif message.text == "highprice":
-        bot.send_message(message.from_user.id, "you input - highprice")
-    elif message.text == "bestdeal":
-        bot.send_message(message.from_user.id, "you input - bestdeal")
-    elif message.text == "history":
-        bot.send_message(message.from_user.id, "you input - history")
-    else:
-        bot.send_message(message.from_user.id, "Я тебя не понимаю.")
+class My_json():
+    def __init__(self):
+        self.datetime = str()
+        self.command = str()
 
-bot.polling(none_stop=False, interval=5)
+    def __str__(self):
+        return str(self.datetime) + "\t\t" + str(self.command)
 
-#bot.polling(none_stop=True, interval=5)
+    def append(self, json_file, str_to_append):
+        with open(logfile, 'w') as f:
+            json.dump(str_to_append, indent=4)  # сериализация JSON
+#            f.write(json.dumps(my_json))
+        f.close()
+
+
+my_json = My_json()
+logfile = "diploma_log.json"
+
+str_to_append = dict()
+
+now = datetime.now() # current date and time
+date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+#print("date and time:",date_time)
+
+command = "lowprice"
+
+str_to_append = {'08/07/2022, 17:44:03': 'highprice'}
+
+
+print(str_to_append)
+
+with open(logfile, 'a') as f:
+    json.dump(str_to_append, f, indent=4)  # сериализация JSON
+
+f.close()
