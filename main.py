@@ -21,12 +21,24 @@ class My_json():
         now = datetime.now()  # current date and time
         date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
         to_append_dict = dict()
-        to_append_dict[date_time]=str_to_append
+        to_append_dict[date_time] = str_to_append
         print(to_append_dict)
         with open(logfile, 'a') as f:
             print("to_append_dict=", to_append_dict, "logfile=", logfile)
             json.dump(to_append_dict, logfile, indent=4)  # сериализация JSON
         f.close()
+
+
+def append(str_to_append):
+    now = datetime.now()  # current date and time
+    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
+    to_append_dict = dict()
+    to_append_dict[date_time] = str_to_append
+    print(to_append_dict)
+    with open(logfile, 'a') as f:
+        print("to_append_dict=", to_append_dict, "logfile=", logfile)
+        json.dump(to_append_dict, f, indent=4)  # сериализация JSON
+    f.close()
 
 
 my_json = My_json()
@@ -48,7 +60,7 @@ def get_text_messages(message):
         my_json.append("lowprice")
         bot.send_message(message.from_user.id, "you input - lowprice 2")
     elif message.text == "highprice":
-        my_json.append("highprice")
+        append("highprice")
         bot.send_message(message.from_user.id, "you input - highprice")
     elif message.text == "bestdeal":
         bot.send_message(message.from_user.id, "you input - bestdeal")
