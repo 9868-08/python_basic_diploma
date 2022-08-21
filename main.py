@@ -1,13 +1,12 @@
 # import os
+from telebot.custom_filters import StateFilter
 import configparser
 import telebot
 import requests
-# from datetime import datetime
-# import json
 import json
-import asyncio
 from datetime import datetime
-import handlers
+import requests
+#import handlers
 
 
 class My_json:
@@ -29,64 +28,59 @@ class My_json:
         f.close()
 
 
-def append(str_to_append):
-    now = datetime.now()  # current date and time
-    date_time = now.strftime("%m/%d/%Y, %H:%M:%S")
-    to_append_dict = dict()
-    to_append_dict[date_time] = str_to_append
-    #    print(to_append_dict)
-    with open(logfile, 'a') as f:
-        print("to_append_dict=", to_append_dict, "logfile=", logfile)
-        json.dump(to_append_dict, f, indent=4)  # сериализация JSON
-    f.close()
+def request_to_api(url, headers, querystring):
+    try:
+        # url = "https://hotels4.p.rapidapi.com/locations/v2/search"
+        # querystring = {"query": "def_city", "locale": "en_US", "currency": "USD"}
+        # headers = {
+          #   "X-RapidAPI-Key": "SIGN-UP-FOR-KEY",
+          #   "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+        #}
+        response = requests.request("GET", url, headers=headers, params=querystring)
+        if response.status_code == requests.codes.ok:
+            return response
+    except Exception as e:
+        print(response.text)
+
+# Получение сообщений от юзера
+@bot.message_handler(content_types=["help"])
+def handle_text(message):
+    bot.send_message(message.chat.id, 'Вы написали: ' + message.text)
 
 
-'''def hotels_requiest():          # запрос списка всех отелей без сортировки
-    url = "https://hotels4.p.rapidapi.com/locations/v2/search"
-    querystring = {"query": "new york", "locale": "en_US", "currency": "RUB"}
-    headers = {
-        "X-RapidAPI-Key": "a66df32f87mshe86994164d3c458p18029djsnb52f634dfcfe",
-        "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    #    print(response.text)
-    return response.text'''
-
-
-def hotels_requiest_highprice(def_city, count):  # запрос списка всех отелей c сортировкой по цене сперва дорогие
-    url = "https://hotels4.p.rapidapi.com/properties/list"
-    querystring = {"destinationId": "1506246", "pageNumber": "1", "pageSize": "25", "checkIn": "<REQUIRED>",
-                   "checkOut": "<REQUIRED>", "adults1": "1", "sortOrder": "PRICE_HIGHEST_FIRST", "locale": "en_US",
-                   "currency": "USD"}
-    headers = {
-        "X-RapidAPI-Key": "a66df32f87mshe86994164d3c458p18029djsnb52f634dfcfe",
-        "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
-    }
-    response = requests.request("GET", url, headers=headers, params=querystring)
-    print(response.text)
-    return response.text
-
-
-my_json = My_json()
-logfile = "diploma_log.json"
-config = configparser.ConfigParser()
-config.read('config.ini')
-TOKEN = config.get("DEFAULT", "TOKEN")
-user_id = config.get("DEFAULT", "user_id")
-bot = telebot.TeleBot(TOKEN)
-
-'''@bot.message_handler(content_types=['text'])
+@bot.message_handler(content_types=['text'])
 def get_text_messages(message):
     if message.text == "help":
        bot.send_message(message.from_user.id,
                          " You can use commands:\n help\n lowprice\n highprice\n bestdeal\n history")
     elif message.text == "lowprice":
-        bot.send_message(message.from_user.id, "you input - lowprice")
-        all_hotels_str = hotels_requiest()
-        all_hotels_dict = eval(all_hotels_str)
-        my_json.append(("lowprice command", all_hotels_dict))
+        bot.send_message(message.chat.id, "Введите дату заезда в формате YYYY-MM-DD")
+        checkin = message.text
+        bot.send_message(message.chat.id, "Введите дату выезда в формате YYYY-MM-DD")
+        checkout = message.text
+        bot.send_message(message.chat.id, "Введите город")
+        city = message.text
+        result = "вы хотите поехать в "+city+" c "+checkin+" по "+checkout
+        bot.send_message(message.from_user.id, result)
+
+        bot.send_message(message.chat.id, 'Вы написали: ' + message.text)
+        #checkIn = bot.
+        all_hotels_str = request_to_api(
+            "https://hotels4.p.rapidapi.com/properties/list",
+            {
+                "X-RapidAPI-Key": "a66df32f87mshe86994164d3c458p18029djsnb52f634dfcfe",
+                "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+            },
+            {"destinationId": "1506246", "pageNumber": "1", "pageSize": "25", "checkIn": "2022-12-10",
+             "checkOut": "2022-12-15", "adults1": "1", "sortOrder": "PRICE", "locale": "en_US", "currency": "USD"}
+            )
+        all_hotels_json = json.loads(all_hotels_str.text)  # десериализация JSON
+        print(type(all_hotels_json))
+
+        my_json.append(("lowprice command", all_hotels_json))
+        bot.send_message(message.from_user.id, all_hotels_json)
+
     elif message.text == "highprice":
-        append("highprice")
         bot.send_message(message.from_user.id, "you input - highprice")
     elif message.text == "bestdeal":
         bot.send_message(message.from_user.id, "you input - bestdeal")
@@ -94,19 +88,6 @@ def get_text_messages(message):
         bot.send_message(message.from_user.id, "you input - history")
     else:
         bot.send_message(message.from_user.id, "Я тебя не понимаю.")
-'''
-
-
-@bot.message_handler(Command(['lowprice', 'highprice', 'bestdeal']), state='*')
-async def define_state(message: Message, state: FSMContext):
-    """"Catches lowprice and higprice commands. Asks user for city name"""
-
-    command = message.text.lstrip('/')
-    await send_city_request_with_photo(message, command)
-    await SelectCity.wait_city_name.set()
-
-    await register_command_in_db(command, message, state)
-
 
 
 @bot.message_handler(content_types=['text'])
@@ -125,8 +106,14 @@ def main(message):
     bot.send_message(message.from_user.id, "Выбран город " + city + " с " + checkIn + "по" + checkOut)
 
 
-
-bot.send_message(message.from_user.id, "you input - highprice")
-bot.polling(none_stop=False, interval=5)
-bot.send_message(message.from_user.id, "для отладки ищем отель в городе: " + city)
+if __name__ == '__main__':
+    bot.add_custom
+    my_json = My_json()
+    logfile = "diploma_log.json"
+    config = configparser.ConfigParser()
+    config.read('config.ini')
+    TOKEN = config.get("DEFAULT", "TOKEN")
+    user_id = config.get("DEFAULT", "user_id")
+    bot = telebot.TeleBot(TOKEN)
+    bot.polling(none_stop=False, interval=5)
 
