@@ -1,3 +1,5 @@
+from loader import  bot
+
 # import os
 from telebot.custom_filters import StateFilter
 import configparser
@@ -107,8 +109,10 @@ def main(message):
 
 
 if __name__ == '__main__':
-    bot.add_custom
-    my_json = My_json()
+    bot.add_custom_filter(StateFilter(bot))
+    set_default_commands(bot)
+    bot.infinity_polling()
+    '''     my_json = My_json()
     logfile = "diploma_log.json"
     config = configparser.ConfigParser()
     config.read('config.ini')
@@ -116,4 +120,4 @@ if __name__ == '__main__':
     user_id = config.get("DEFAULT", "user_id")
     bot = telebot.TeleBot(TOKEN)
     bot.polling(none_stop=False, interval=5)
-
+'''
