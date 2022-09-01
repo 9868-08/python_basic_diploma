@@ -1,6 +1,6 @@
-from telebot.types import Message
-from handlers.default_heandlers.get_date import bot_checkin
-from loader import bot
+#from telebot.types import Message
+#from handlers.default_heandlers.get_date import bot_checkin
+#from loader import bot
 
 checkin = bot_checkin(bot)
 

@@ -1,10 +1,5 @@
-from loader import bot
-import handlers
-from telebot.custom_filters import StateFilter
-#from utils
 import os
 from dotenv import load_dotenv, find_dotenv
-
 
 if __name__ == '__main__':
     bot.add
