@@ -1,1 +1,0 @@
-from . import destination_information

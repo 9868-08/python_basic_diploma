@@ -1,6 +1,6 @@
-#from telebot.types import Message
+from telebot.types import Message
 
-#from loader import bot
+from loader import bot
 
 
 # Эхо хендлер, куда летят текстовые сообщения без указанного состояния
