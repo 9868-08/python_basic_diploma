@@ -3,7 +3,7 @@ import bot
 from utils.set_bot_commands import set_default_commands
 import logging
 from loader import dp
-from aiogram.contrib.middlewares.logging import LoggingMiddleware
+
 from handlers import default_handlers
 
 

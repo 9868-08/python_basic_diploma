@@ -1,3 +1,11 @@
 pyTelegramBotAPI==4.4.0
 python-dotenv==0.19.2
 aiogram~=2.22.1
+motor~=3.0.0python-dotenv==0.19.2
+aiogram==2.20
+aiohttp==3.8.1
+python-telegram-bot-pagination==0.0.2
+python-telegram-bot-calendar==1.0.5
+pymongo==4.2.0
+motor==3.0.0
+dnspython==2.2.1
