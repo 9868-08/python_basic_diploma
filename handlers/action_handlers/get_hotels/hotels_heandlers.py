@@ -26,7 +26,7 @@ async def define_state(message: Message, state: FSMContext):
 @dp.message_handler(Text(['⬇️ Недорогие отели']), state='*')
 async def show_lowprice(message: Message, state: FSMContext):
     """"Catches text about lowprice hotels. Asks user for city name"""
-
+    print('lowprice selected')
     command = 'lowprice'
     await send_city_request_with_photo(message, command)
     await SelectCity.wait_city_name.set()
@@ -59,9 +59,9 @@ async def show_highprice(message: Message, state: FSMContext):
 async def send_city_request_with_photo(message: Message, command: str):
     """Sends request about city to user with decorate photo"""
 
-    await message.bot.send_photo(photo=get_photo_by_command(command=command), chat_id=message.chat.id,
+'''    await message.bot.send_photo(photo=get_photo_by_command(command=command), chat_id=message.chat.id,
                                  caption='<b>↘️ Отправьте боту город для поиска</b>',
-                                 reply_markup=ReplyKeyboardRemove())
+                                 reply_markup=ReplyKeyboardRemove())'''
 
 
 async def register_command_in_db(command: str, message: Message, state: FSMContext):

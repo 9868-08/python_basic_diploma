@@ -3,8 +3,9 @@ import bot
 from utils.set_bot_commands import set_default_commands
 import logging
 from loader import dp
-
-from handlers import default_handlers
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+#from handlers import default_handlers
+import handlers
 
 
 async def on_startup(dispatcher):

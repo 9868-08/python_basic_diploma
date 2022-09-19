@@ -16,6 +16,8 @@ from keyboards.reply.hotels_menu import show_more_hotels_keyboard
 from loader import dp
 
 
+print("get_hotels included")
+
 @dp.callback_query_handler(lambda call: call.data.startswith('city_info_'), state=GetHotels.is_info_correct)
 async def find_hotels_if_info_correct(call: CallbackQuery, state: FSMContext):
     """
