@@ -1,14 +1,14 @@
-from rapidapi.rapidapi_requests.hotels_request import get_hotel_photos_json
-from .hotel_details_utils import distance_str_to_float_in_km, generate_address, trying_to_get_link
-from .get_results import get_hotels_dict, get_bestdeal_hotels_dict, trying_to_get_bestdeal_results, \
-    trying_to_get_results
-
-from utils.named_tuples import HotelInfo, ID, KM, Link, USD
-from typing import Union
 from datetime import date
+from typing import Union, List, Dict
+
 
 from exceptions.rapidapi_exceptions import ResponseIsEmptyError, BadRapidapiResultError, \
     HotelsNotFoundError
+from rapidapi.rapidapi_requests.hotels_request import get_hotel_photos_json
+from utils.named_tuples import HotelInfo, ID, KM, Link, USD
+from .get_results import get_hotels_dict, get_bestdeal_hotels_dict, trying_to_get_bestdeal_results, \
+    trying_to_get_results
+from .hotel_details_utils import distance_str_to_float_in_km, generate_address, trying_to_get_link
 
 
 #async def get_hotels_info(data: dict, page: int) -> Union[list[HotelInfo], dict]:
@@ -40,7 +40,7 @@ async def get_hotels_info(data: dict, page: int):
 
 
 #def parse_hotels_info(results: list[dict], date_in: date, date_out: date) -> list[HotelInfo]:
-def parse_hotels_info(results: list[dict], date_in: date, date_out: date):
+def parse_hotels_info(results: List[Dict], date_in: date, date_out: date):
     """Parses found info about each hotel. Returns list of information about each hotel"""
 
     hotels_info = list()
@@ -77,7 +77,7 @@ def parse_hotels_info(results: list[dict], date_in: date, date_out: date):
     return hotels_info
 
 
-async def get_hotel_photo_links(hotel_id: ID) -> Union[list[Link], dict]:
+async def get_hotel_photo_links(hotel_id: ID) -> Union[List[Link], dict]:
     """Gets list of hotel photo urls by id"""
 
     try:
