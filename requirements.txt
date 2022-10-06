@@ -1,5 +1,5 @@
-pyTelegramBotAPI==4.4.0
-python-dotenv==0.19.2
+pyTelegramBotAPI==4.7.0
+python-dotenv==0.21.0
 aiogram~=2.22.1
 motor~=3.0.0
 python-dotenv==0.19.2
