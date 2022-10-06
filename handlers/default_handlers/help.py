@@ -1,26 +1,40 @@
-from aiogram.types import Message, CallbackQuery, ContentTypes
-from loader import dp
+import logging
 
-help_text = '<b>Поиск отелей:</b>\n' \
-            '/lowprice - Будут найдены отели по возрастанию цены\n' \
-            '/highprice - Будут найдены отели по убыванию цены\n' \
-            '/bestdeal - Поиск отеля с условиями: диапазон цен, максимальная удаленность от центра\n' \
-            '\n<b>Ваши отели:</b>\n' \
-            '/history - История поиска. Найденные отели и вызванные команды\n' \
-            '/favorites - Отели, добавленные в избранное\n' \
-            '\n<b>Стандартные команды</b>\n' \
-            '/start - Перезапускает работу бота\n' \
-            '/help - Выводит данное сообщение\n' \
-            '\n<b>Рекомендации:</b>\n' \
-            'При возникших ошибках:\n' \
-            '1. Попробуйте перезапустить бота, отправив боту /start\n' \
-            '2. Иногда на сервере возникают ошибки, не зависящие от работы бота. Попробуйте запустить бота через ' \
-            '1-5 мин\n' \
-            '3. Если ошибка сохраняется, Вы всегда можете написать разработчику @dinky_s, приложив скриншот ' \
-            'ошибки'
+from aiogram import Bot, Dispatcher, types
+from aiogram import executor
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
+from aiogram.contrib.middlewares.logging import LoggingMiddleware
+from aiogram.types import Message, ContentTypes
 
-@dp.message_handler(state=None, content_types=ContentTypes.ANY)
-async def bot_echo(message: Message):
-    """Heandler that takes messages without a filter or state"""
-    await message.answer(help_text)
+from config_data import config
 
+bot = Bot(token=config.BOT_TOKEN, parse_mode=types.ParseMode.HTML)
+storage = MemoryStorage()
+dp = Dispatcher(bot=bot, storage=storage)
+print(dp)
+
+
+@dp.message_handler(commands=['start'])
+async def process_start_command(message: types.Message):
+    await message.reply("Привет!\n"
+                        "\help', "Вывести справку"),
+    ('lowprice',  'Узнать топ самых дешёвых отелей в городе'),
+    ('highprice', 'Узнать топ самых дорогих отелей в городе'),
+    ('bestdeal',  'Узнать топ отелей, наиболее подходящих по цене и расположению от центра (самые дешёвые и находятся ближе всего к центру)'),
+    ('history',   'Узнать историю поиска отелей')")
+    await message.reply("await message.reply")
+
+
+async def on_startup(dispatcher):
+    logger = logging.getLogger(__name__)
+
+    dispatcher.setup_middleware(LoggingMiddleware())
+    logger.info("Starting bot")
+    logging.basicConfig(
+        level=logging.INFO,
+        format=u'%(filename)s:%(lineno)d #%(levelname)-8s [%(asctime)s] - %(name)s - %(message)s',
+    )
+
+#    await set_default_commands(dispatcher)
+
+executor.start_polling(dp, on_startup=on_startup)
