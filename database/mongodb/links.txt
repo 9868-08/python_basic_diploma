@@ -1,5 +1,0 @@
-MongoDB Create Administrator User
-https://disk.yandex.ru/d/SxJuThXv6wA0eQ
-
-https://www.mongodb.com/docs/manual/tutorial/install-mongodb-on-red-hat/
-
