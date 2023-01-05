@@ -1,43 +1,35 @@
+from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from telebot import TeleBot, custom_filters
 from telebot.storage import StateMemoryStorage
-
 from config_data import config
 from states import bot_states
+from aiogram.dispatcher import Dispatcher
 
 storage = StateMemoryStorage()
 bot = TeleBot(token=config.BOT_TOKEN, state_storage=storage)
+#bot = Dispatcher(bot, storage=MemoryStorage())
 
 
-@bot.message_handler(commands=['start'])
-def start_ex(message):
-    """
-    Start command. Here we are starting state
-    """
-    bot.set_state(message.from_user.id, bot_states.MyStates.far_away_from_center, message.chat.id)
-    bot.send_message(message.chat.id, 'Hi, write me a target city')
+@bot.message_handler(state='*', commands=['lowprice'])
+def help (message):
+    bot.set_state(message.from_user.id,bot_states.MyStates.lowprice, message.chat.id)
+    bot.send_message(message.chat.id, 'Hi, ищем самые дешовые отелы и городе %город%')
 
 
-@bot.message_handler(state=bot_states.MyStates.far_away_from_center)
-def name_get(message):
-    bot.send_message(message.chat.id, 'How far away from center?')
-    bot.delete_state(message.from_user.id, message.chat.id)
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['name'] = message.text
+@bot.message_handler(state='*', commands=['highprice'])
+def help(message):
+    bot.set_state(message.from_user.id, bot_states.MyStates.highprice, message.chat.id)
+    bot.send_message(message.chat.id, 'Hi, ищем самые дорогие отелы и городе %город%')
 
 
-# Any state
-@bot.message_handler(state="*", commands=['cancel'])
-def any_state(message):
-    """
-    Cancel state
-    """
-    bot.send_message(message.chat.id, "Your state was cancelled.")
-    bot.delete_state(message.from_user.id, message.chat.id)
-
-# register filters
+@bot.message_handler(state='*', commands=['bestdeal'])
+def help(message):
+    bot.set_state(message.from_user.id, bot_states.MyStates.bestdeal, message.chat.id)
+    bot.send_message(message.chat.id, 'Hi, ищем самые дорогие отелы и городе %город%')
 
 
-bot.add_custom_filter(custom_filters.StateFilter(bot))
-bot.add_custom_filter(custom_filters.IsDigitFilter())
+@bot.message_handler(state='*', commands=['history'])
+def help(message):
+    bot.set_state(message.from_user.id, bot_states.MyStates.history, message.chat.id)
+    bot.send_message(message.chat.id, 'Hi, ищем самые дорогие отелы и городе %город%')
 
-bot.infinity_polling(skip_pending=True)

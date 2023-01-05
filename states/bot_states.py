@@ -5,3 +5,7 @@ class MyStates(StatesGroup):
     # Just name variables differently
     city = State()  # creating instances of State class is enough from now
     far_away_from_center = State()
+    lowprice = State()
+    highprice = State()
+    bestdeal = State()
+    history = State()

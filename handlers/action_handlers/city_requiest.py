@@ -10,8 +10,12 @@ from loader import bot
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
 def city_requiest (message):
+    global mycity
+    mycity = ""
     bot.set_state(message.from_user.id,bot_states.MyStates.far_away_from_center, message.chat.id)
     bot.send_message(message.chat.id, 'Hi, write me a target city')
+    mycity = message.text
+    print("city=", mycity)
 
 
 @bot.message_handler(state=bot_states.MyStates.far_away_from_center)
