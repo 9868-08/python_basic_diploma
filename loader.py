@@ -1,4 +1,4 @@
-from aiogram.contrib.fsm_storage.memory import MemoryStorage
+#from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from telebot import TeleBot, custom_filters
 from telebot.storage import StateMemoryStorage
 from config_data import config
