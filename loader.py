@@ -3,7 +3,7 @@ from telebot import TeleBot, custom_filters
 from telebot.storage import StateMemoryStorage
 from config_data import config
 from states import bot_states
-from aiogram.dispatcher import Dispatcher
+#from aiogram.dispatcher import Dispatcher
 
 storage = StateMemoryStorage()
 bot = TeleBot(token=config.BOT_TOKEN, state_storage=storage)
