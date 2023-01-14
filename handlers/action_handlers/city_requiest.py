@@ -49,7 +49,7 @@ def name_get(message):
     bot.send_message(message.chat.id, 'Need photos? (1 - Yes, 2 - No)')
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['city'] = message.text
+        data['need_photos'] = message.text
  
  
 @bot.message_handler(state=MyStates.need_photos)
