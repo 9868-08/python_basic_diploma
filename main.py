@@ -19,4 +19,6 @@ def on_startup(dispatcher):
 
 
 if __name__ == '__main__':
-    executor.start_polling(dp, on_startup=on_startup)
+    bot.infinity_polling(skip_pending=True)
+    #executor.start_polling(dp, on_startup=on_startup)
+
