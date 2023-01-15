@@ -30,6 +30,7 @@ def start_ex(message):
     bot.send_message(message.chat.id, 'Hi, write me a city')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
+    print('bot.get_state(message)', bot.get_state(message))
  
 
 # Any state
@@ -40,6 +41,7 @@ def any_state(message):
     """
     bot.send_message(message.chat.id, "Your state was cancelled.")
     bot.delete_state(message.from_user.id, message.chat.id)
+    print('bot.get_state(message)', bot.get_state(message))
 
 
 @bot.message_handler(state=MyStates.city)
@@ -51,7 +53,7 @@ def date_get(message):
     bot.set_state(message.from_user.id, MyStates.date, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
-    print(MyStates)
+    print('bot.get_state(message)', bot.get_state(message))
  
 
 # result
@@ -61,7 +63,7 @@ def set_date(message):
     print(MyStates)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['date'] = message.text
-
+    print('bot.get_state(message)', bot.get_state(message))
 
 @bot.message_handler(state=MyStates.result)
 def ready_for_answer(message):
@@ -71,6 +73,7 @@ def ready_for_answer(message):
             f"Date: {data['date']}\n")
     bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
+    print('bot.get_state(message)', bot.get_state(message))
 
 
 # register filters
