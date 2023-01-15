@@ -16,13 +16,14 @@ from loader import bot
 
 # States group.
 class MyStates(StatesGroup):
-    # Just name variables differently
+    start = State()
 #    name = State()
     city = State()
 #    surname = State()
     how_much_hotels = State()
 #    age = State()
     need_photos = State()
+
     how_much_photos = State()
     price_range = State()         #Диапазон цен
     distance = State()              # Диапазон расстояния, на котором находится отель от центра
@@ -35,32 +36,49 @@ def start_ex(message):
     """
     Start command. Here we are starting state
     """
-    bot.set_state(message.from_user.id, MyStates.city, message.chat.id)
+    bot.set_state(message.from_user.id, MyStates.start, message.chat.id)
+#    bot.send_message(message.chat.id, 'Hi!')
     bot.send_message(message.chat.id, 'Hi, write me a city')
+    requiest_city(message)
+
+
+@bot.message_handler(state=MyStates.start)
+def requiest_city(message):
+    """
+    Start command. Here we are starting state
+    """
+    print("def requiest_city begin message.text=", message.text)
+    bot.set_state(message.from_user.id, MyStates.city, message.chat.id)
+#    bot.send_message(message.chat.id, 'Hi, write me a city')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
+    print("def requiest_city end message.text=", message.text)
 
 
 @bot.message_handler(state=MyStates.city)
-def name_get(message):
+def need_photos(message):
     """
-    State 2. Will process when user's state is MyStates.city.
+    Start command. Here we are starting state
     """
-    bot.send_message(message.chat.id, 'Need photos? (1 - Yes, 2 - No)')
+    print("def need_photos begin message.text=", message.text)
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
+#    bot.send_message(message.chat.id, 'Need photos? (1 - Yes, 2 - No)')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['need_photos'] = message.text
- 
- 
+    print("def need_photos end message.text=", message.text)
+
+
 @bot.message_handler(state=MyStates.need_photos)
-def ask_age(message):
+def photos_quantity(message):
     """
     State 2. Will process when user's state is MyStates.surname.
     """
+    print("def photos_quantity begin message.text=", message.text)
     bot.send_message(message.chat.id, "How much photos?")
     bot.set_state(message.from_user.id, MyStates.how_much_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_photos'] = message.text
+    print("def photos_quantity begin message.text=", message.text)
 
 
 # result
@@ -72,7 +90,7 @@ def ready_for_answer(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         msg = ("Ready, take a look:\n<b>"
                f"City: {data['city']}\n"
-               f"'Need photos?: {data['need_photos']}\n"
+#               f"'Need photos?: {data['need_photos']}\n"
                f"How much photos?: {message.text}</b>")
         bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
