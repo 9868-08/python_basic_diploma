@@ -1,5 +1,5 @@
 pyTelegramBotAPI==4.9.0		#ModuleNotFoundError: No module named 'telebot'
-python-dotenv==0.21.0
+python-dotenv~=0.21.0
 #telebot==0.0.4
 pyTelegramBotApi
 #aiogram
