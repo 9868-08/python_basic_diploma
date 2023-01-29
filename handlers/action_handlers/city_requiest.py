@@ -29,9 +29,6 @@ def start_ex(message):
     """
     bot.set_state(message.from_user.id, MyStates.city, message.chat.id)
     bot.send_message(message.chat.id, 'Hi, write me a city')
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['city'] = message.text
-
 
 
 # Any state
@@ -44,30 +41,37 @@ def any_state(message):
     bot.delete_state(message.from_user.id, message.chat.id)
 
 
+
 @bot.message_handler(state=MyStates.city)
+def start_ex(message):
+    """
+    Start command. Here we are starting state
+    """
+    bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
+    bot.send_message(message.chat.id, 'Now write how much hotels to search')
+    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+        data['city'] = message.text
+
+
+@bot.message_handler(state=MyStates.how_much_hotels)
 def name_get(message):
     """
     State 1. Will process when user's state is MyStates.city.
     """
-    bot.send_message(message.chat.id, 'Now write how much hotels to search')
-    bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
+    bot.send_message(message.chat.id, 'Need photos?')
+    bot.set_state(message.from_user.id, MyStates.need_photo, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_hotels'] = message.text
 
 
-@bot.message_handler(state=MyStates.how_much_hotels)
+@bot.message_handler(state=MyStates.need_photo)
 def ask_age(message):
-    """
-    State 2. Will process when user's state is MyStates.how_much_hotels.
-    """
     bot.send_message(message.chat.id, "Need photo?")
     bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['need_photo'] = message.text
 
 
-
-# result
 @bot.message_handler(state=MyStates.print_results)
 def ready_for_answer(message):
     """
