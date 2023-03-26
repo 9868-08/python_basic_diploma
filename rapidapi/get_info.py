@@ -17,8 +17,7 @@ def api_request( method_endswith,  # Меняется в зависимости 
     if method_type == 'GET':
         return get_request(
             url=url,
-            params=params,
-            timeout=10
+            params=params
         )
     else:
         return post_request(

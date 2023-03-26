@@ -49,7 +49,10 @@ def ready_for_answer(message):
         bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
 
-    hotel_id_list = rapidapi.get_info.def_rapidapy_start(data['city'])
+#    hotel_id_list = rapidapi.get_info.def_rapidapy_start(data['city'])
+    hotel_id_list = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')
+    print('hotel_id_list type=', type(hotel_id_list))
+    print('hotel_id_list=', hotel_id_list)
     for hotel in hotel_id_list:
         count = 0
         while count <= int(data['how_much_hotels']):
