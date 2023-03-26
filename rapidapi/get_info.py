@@ -17,7 +17,8 @@ def api_request( method_endswith,  # Меняется в зависимости 
     if method_type == 'GET':
         return get_request(
             url=url,
-            params=params
+            params=params,
+            timeout=10
         )
     else:
         return post_request(
@@ -27,10 +28,14 @@ def api_request( method_endswith,  # Меняется в зависимости 
 
 
 def get_request(url, params):
+    headers = {
+        "X-RapidAPI-Key": "7d70182871msh0110c820c62cce9p13613fjsna334f8c7dfe3",
+        "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+    }
     try:
         response = get(
             url,
-            headers=...,
+            headers=headers,
             params=params,
             timeout=15
         )
