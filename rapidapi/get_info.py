@@ -1,15 +1,11 @@
-from json import JSONDecodeError
 import requests
 import json
-from requests import Response
-from loader import bot
-from states import bot_states
 from requests import get, codes
 
 
-def api_request( method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
-                        params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
-                        method_type  # Метод\тип запроса GET\POST
+def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
+                params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
+                method_type  # Метод\тип запроса GET\POST
                 ):
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
 
@@ -44,10 +40,29 @@ def get_request(url, params):
         ...
 
 
+def post_request(url, params):
+    headers = {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "7d70182871msh0110c820c62cce9p13613fjsna334f8c7dfe3",
+        "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
+    }
+    try:
+        response = get(
+            url,
+            headers=headers,
+            params=params,
+            timeout=15
+        )
+        if response.status_code == codes.ok:
+            return response.json()
+    except BaseException:
+        ...
+
+
 def def_get_location_id(city: str):
     import requests
     url = "https://hotels4.p.rapidapi.com/locations/v3/search"
-#    querystring = {"q": "new york", "locale": "ru_RU"}
+    #    querystring = {"q": "new york", "locale": "ru_RU"}
     querystring = {"q": city, "locale": "ru_RU"}
 
     headers = {
@@ -56,6 +71,8 @@ def def_get_location_id(city: str):
     }
     response = requests.request("GET", url, headers=headers, params=querystring)
     return response.json()
+
+
 #    print(response.text)
 
 
@@ -69,7 +86,7 @@ def def_hotel_id(location_id: int):
         "eapid": 1,
         "locale": "ru_RU",
         "siteId": 300000001,
-        "destination": {"regionId": "location_id"},
+        "destination": {"regionId": location_id},
         "checkInDate": {
             "day": 10,
             "month": 10,
@@ -101,7 +118,7 @@ def def_hotel_id(location_id: int):
     }
 
     response = requests.request("POST", url, json=payload, headers=headers)
-#    print(response.text)
+    #    print(response.text)
     return response.json()
 
 
@@ -124,7 +141,7 @@ def def_hotel_detail(hotel_id: int):
     # this line converts the response to a python dict which can then be parsed easily
     response_dict = json.loads(response.text)
 
-#    print(response_dict['data']['propertyInfo'])
+    #    print(response_dict['data']['propertyInfo'])
     return response_dict
 
 
@@ -132,7 +149,7 @@ def def_rapidapy_start(city):
     city = "Boston"
     location_json = def_get_location_id(city)
     location_id = location_json['sr'][0]['gaiaId']
-#    print(city, "id=", location_id)
+    #    print(city, "id=", location_id)
     hotel_id_json = def_hotel_id(location_id)
     #  hotel_id_json['data']['propertySearch']['properties'][0]['id']:
     parsed = hotel_id_json['data']['propertySearch']
