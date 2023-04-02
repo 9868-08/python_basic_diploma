@@ -24,6 +24,12 @@ DEFAULT_COMMANDS = (
 )
 #time_offset = datetime.timezone(datetime.timedelta(hours=3))
 
+import logging
+logging.basicConfig(filename='logs/logs.log', level=logging.DEBUG)
+logging.debug('Error')
+logging.info('Information message')
+logging.warning('Warning')
+
 #Для команд lowprice, highprice
 # 1. Город, где будет проводиться поиск.
 # 2. Количество отелей, которые необходимо вывести в результате (не больше заранее определённого максимума).

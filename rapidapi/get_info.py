@@ -1,4 +1,4 @@
-import requests
+#import requests
 import json
 from requests import get, codes
 
