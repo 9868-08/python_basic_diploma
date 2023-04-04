@@ -53,15 +53,47 @@ def ready_for_answer(message):
     location_json = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')     #предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
     location_id = location_json['sr'][0]['gaiaId']
 #    hotel_id_json = def_hotel_id(location_id)
-    payload = {"currency": "USD","eapid": 1,"locale": "ru_RU","siteId": 300000001,"destination": {"regionId": location_id},"checkInDate": {"day": 10,"month": 10,"year": 2022},
-                    "checkOutDate": {"day": 15,"month": 10,"year": 2022},"rooms": [{"adults": 2,"children": [{"age": 5}, {"age": 7}]}],
-                    "resultsStartingIndex": 0,"resultsSize": 200,"sort": "PRICE_LOW_TO_HIGH","filters": {"price": {"max": 150,"min": 100}}}
+    payload = {
+        "currency": "USD",
+        "eapid": 1,
+        "locale": "ru_RU",
+        "siteId": 300000001,
+        "destination": {"regionId": location_id},
+        "checkInDate": {
+            "day": 10,
+            "month": 10,
+            "year": 2022
+        },
+        "checkOutDate": {
+            "day": 15,
+            "month": 10,
+            "year": 2022
+        },
+        "rooms": [
+            {
+                "adults": 2,
+                "children": [{"age": 5}, {"age": 7}]
+            }
+        ],
+        "resultsStartingIndex": 0,
+        "resultsSize": 200,
+        "sort": "PRICE_LOW_TO_HIGH",
+        "filters": {"price": {
+            "max": 150,
+            "min": 100
+        }}
+    }
 
     hotel_id_json = rapidapi.get_info.api_request('properties/v2/list', payload, 'POST')
     parsed = hotel_id_json['data']['propertySearch']
     hotel_id_list = []
+
     for item in parsed['properties']:
-        hotel_id_list.append(item['id'])
+        hotel_id = int(item['id'])
+        payload = {"currency": "USD","eapid": 1,"locale": "en_US","siteId": 300000001,"propertyId": hotel_id}
+        hotel_detail = rapidapi.get_info.post_request('https://hotels4.p.rapidapi.com/properties/v2/detail', payload)
+        hotel_id_list.append(hotel_id)
+        print(hotel_detail)
     return hotel_id_list
 
     return hotel_id_list
