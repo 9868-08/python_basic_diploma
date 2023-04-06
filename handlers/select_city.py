@@ -33,11 +33,14 @@ def name_get(message):
         bot.send_message(message.chat.id, 'ok - no photos')
         bot.set_state(message.from_user.id, bot_states.MyStates.print_results, message.chat.id)
         with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+            data['need_photos'] = message.text
+            data['need_photos'] = "N"
             data['how_much_photos'] = 0
 
 
 @bot.message_handler(state=bot_states.MyStates.print_results)
 def ready_for_answer(message):
+    print ('ready_for_answer')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_photos'] = message.text
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
@@ -87,14 +90,17 @@ def ready_for_answer(message):
     hotel_id_json = rapidapi.get_info.api_request('properties/v2/list', payload, 'POST')
     parsed = hotel_id_json['data']['propertySearch']
     hotel_id_list = []
-
+    #import pprint
+    count = 0
     for item in parsed['properties']:
+        #print (count, int(data['how_much_photos']))
+        if count+1 > int(data['how_much_photos']):
+          break
         hotel_id = int(item['id'])
         payload = {"currency": "USD","eapid": 1,"locale": "en_US","siteId": 300000001,"propertyId": hotel_id}
-        hotel_detail = rapidapi.get_info.post_request('https://hotels4.p.rapidapi.com/properties/v2/detail', payload)
         hotel_id_list.append(hotel_id)
-        print(hotel_detail)
+        print(item['name'])
+    #    pprint.pprint(item)
+        bot.send_message(message.chat.id, 'hotelname='+item['name']+'photo'+str(item['propertyImage']))
+        count +=1
     return hotel_id_list
-
-    return hotel_id_list
-
