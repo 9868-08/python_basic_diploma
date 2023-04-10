@@ -1,5 +1,4 @@
 import os
-#import datetime
 from dotenv import load_dotenv, find_dotenv
 
 if not find_dotenv():
@@ -22,7 +21,6 @@ DEFAULT_COMMANDS = (
     ('bestdeal',  'Узнать топ отелей, наиболее подходящих по цене и расположению от центра (самые дешёвые и находятся ближе всего к центру)'),
     ('history',   'Узнать историю поиска отелей')
 )
-#time_offset = datetime.timezone(datetime.timedelta(hours=3))
 
 import logging
 logging.basicConfig(filename='logs/logs.log', level=logging.DEBUG)
