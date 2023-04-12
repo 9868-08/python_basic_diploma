@@ -1,16 +1,11 @@
-"""
-Simple time range limit.
-"""
-
 from telebot import TeleBot
 from datetime import date
-
 from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
+from loader import bot
+from states import bot_states
 
-bot = TeleBot("5353535107:AAEPSYNZarSnJY1hcQr11WVCPMGxyZp4PgA")
 
-
-@bot.message_handler(commands=['start'])
+@bot.message_handler(state=bot_states.MyStates.check_in)
 def start(m):
     calendar, step = DetailedTelegramCalendar(max_date=date.today()).build()
     bot.send_message(m.chat.id,
@@ -32,4 +27,3 @@ def cal(c):
                               c.message.message_id)
 
 
-bot.polling()
