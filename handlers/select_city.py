@@ -3,46 +3,16 @@ from states import bot_states
 from telebot.storage import StateMemoryStorage
 from loader import bot
 from rapidapi import get_info
-from telebot import TeleBot
-from datetime import date
-
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-
 state_storage = StateMemoryStorage()
 
 
 @bot.message_handler(state=bot_states.MyStates.city)
 def start_ex(message):
-    bot.set_state(message.from_user.id, bot_states.MyStates.check_in, message.chat.id)
+    bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
     bot.send_message(message.chat.id, 'Now write how much hotels to search')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
 
-
-
-@bot.message_handler(commands=['start'])
-def start(m):
-    calendar, step = DetailedTelegramCalendar(max_date=date.today()).build()
-    bot.send_message(m.chat.id,
-                     f"Select {LSTEP[step]}",
-                     reply_markup=calendar)
-
-
-@bot.callback_query_handler(func=DetailedTelegramCalendar.func())
-def cal(c):
-    result, key, step = DetailedTelegramCalendar(max_date=date.today()).process(c.data)
-    if not result and key:
-        bot.edit_message_text(f"Select {LSTEP[step]}",
-                              c.message.chat.id,
-                              c.message.message_id,
-                              reply_markup=key)
-    elif result:
-        bot.edit_message_text(f"You selected {result}",
-                              c.message.chat.id,
-                              c.message.message_id)
-
-
-bot.polling()
 
 @bot.message_handler(state=bot_states.MyStates.how_much_hotels)
 def name_get(message):

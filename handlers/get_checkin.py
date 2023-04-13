@@ -1,29 +1,14 @@
-from telebot import TeleBot
-from datetime import date
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-from loader import bot
-from states import bot_states
+ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'} #чтобы русифицировать сообщения
 
+def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
+    if min_date is None:
+        min_date = date.today()
 
-@bot.message_handler(state=bot_states.MyStates.check_in)
-def start(m):
-    calendar, step = DetailedTelegramCalendar(max_date=date.today()).build()
-    bot.send_message(m.chat.id,
-                     f"Select {LSTEP[step]}",
-                     reply_markup=calendar)
-
-
-@bot.callback_query_handler(func=DetailedTelegramCalendar.func())
-def cal(c):
-    result, key, step = DetailedTelegramCalendar(max_date=date.today()).process(c.data)
-    if not result and key:
-        bot.edit_message_text(f"Select {LSTEP[step]}",
-                              c.message.chat.id,
-                              c.message.message_id,
-                              reply_markup=key)
-    elif result:
-        bot.edit_message_text(f"You selected {result}",
-                              c.message.chat.id,
-                              c.message.message_id)
-
-
+    if is_process:
+        result, keyboard, step = DetailedTelegramCalendar(min_date=min_date, locale=locale).process(call_data=callback_data.data)
+        return result, keyboard, ALL_STEPS[step]
+    else:
+        calendar, step = DetailedTelegramCalendar(current_date=min_date,
+                                         min_date=min_date,
+                                         locale=locale).build()
+        return calendar, ALL_STEPS[step]
