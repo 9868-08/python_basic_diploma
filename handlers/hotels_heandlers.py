@@ -11,10 +11,6 @@ import time
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
-def location(call_button):
-    calendar, step = create_calendar(call_button)
-    bot.send_message(..., f"Укажите {step} заезда", reply_markup=calendar)
-    bot.set_state(message.from_user.id, bot_states.MyStates.check_in, message.chat.id)
 
 def start_highprice(message):
     message_dict = json.loads(jsonpickle.encode(message))
@@ -25,12 +21,6 @@ def start_highprice(message):
 
     # diploma_database.Hotel_search(data['selected_command'])
     # request = diploma_database.Hotel_search
-
-    data['city'] = "Boston"
-    data['how_much_hotels'] = 2
-    data['need_photos'] = "Y"
-    data['how_much_photos'] = 2
-
     bot.set_state(message.from_user.id, bot_states.MyStates.city, message.chat.id)
     return
 

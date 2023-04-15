@@ -5,6 +5,7 @@ from requests import Response
 from loader import bot
 from states import bot_states
 from requests import get, codes
+import ast
 
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
@@ -36,7 +37,18 @@ def get_request(url, params):
             timeout=15
         )
         if response.status_code == codes.ok:
-            return response.json()
+            # return response.json()
+            cities = list()
+            cities_dict = dict()
+            response_text = response.text
+            response_dict = ast.literal_eval(response_text)
+            for i in response_dict['sr']:
+                # Возможно ключи стоит поправить - проверьте работоспособность
+                cities.append(
+                    dict(id=i['gaiaId'],
+                    region_name=i['regionNames']['fullName'])
+                )
+            return cities
     except BaseException:
         ...
 

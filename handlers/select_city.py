@@ -8,10 +8,19 @@ state_storage = StateMemoryStorage()
 
 @bot.message_handler(state=bot_states.MyStates.city)
 def start_ex(message):
-    bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
-    bot.send_message(message.chat.id, 'Now write how much hotels to search')
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
+
+    location_list = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')     #предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
+#    location_id = location_json['sr'][0]['gaiaId']
+    bot.send_message(message.chat.id,   " name = " +
+                                        location_list[0]['region_name'] +
+                                        "\nid= " +
+                                        location_list[0]['id'])
+
+    bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
+    bot.send_message(message.chat.id, 'Now write how much hotels to search')
+    return
 
 
 @bot.message_handler(state=bot_states.MyStates.how_much_hotels)
@@ -40,7 +49,12 @@ def name_get(message):
 
 @bot.message_handler(state=bot_states.MyStates.print_results)
 def ready_for_answer(message):
-    print ('ready_for_answer')
+
+    data['city'] = "Boston"
+    data['how_much_hotels'] = 2
+    data['need_photos'] = "Y"
+    data['how_much_photos'] = 2
+
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_photos'] = message.text
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:

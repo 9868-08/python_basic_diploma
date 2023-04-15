@@ -1,3 +1,9 @@
+locations/v3/search - поиск локации по названию  
+properties/v2/list - получение списка отелей по региону  
+properties/v2/detail - подробнее об отеле - адрес, фотки
+
+
+
 src: https://github.com/9868-08
 
 # Better Than Booking Bot
