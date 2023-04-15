@@ -1,6 +1,9 @@
+import telebot
+import constants
+from telebot import types
 from loader import bot
-from rapidapi.get_info import api_request
 
 
-request = api_request( 'locations/v3/search',   {"q": 'Boston', "locale": "ru_RU"}, 'GET')
-print(request)
+@bot.message_handler(commands=["command"])  # В commands может быть несколько разных команд
+def answer(message):
+    command = message.split(maxsplit=1)[1]  # В переменной будет всё,что идёт после /command

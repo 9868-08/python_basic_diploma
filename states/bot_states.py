@@ -11,3 +11,8 @@ class MyStates(StatesGroup):
     print_results = State()
     rapidapi_get_cityid = State()
     hotel_id_list = State()
+
+
+class SelectDates(StatesGroup):
+    start_select_date_in = State()
+    select_date_in = State()

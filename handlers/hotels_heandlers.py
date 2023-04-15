@@ -15,8 +15,9 @@ def start_highprice(message):
     print(data['selected_command'])
     bot.send_message(message.chat.id, data['selected_command'] + ' was selected. \n Hi, write me a city')
 
-    diploma_database.Hotel_search('highprice')
-    request = diploma_database.Hotel_search
+    # diploma_database.Hotel_search(data['selected_command'])
+    # request = diploma_database.Hotel_search
+
     data['city'] = "Boston"
     data['how_much_hotels'] = 2
     data['need_photos'] = "Y"
