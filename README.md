@@ -6,7 +6,7 @@ properties/v2/detail - подробнее об отеле - адрес, фотк
 
 src: https://github.com/9868-08
 
-# Better Than Booking Bot
+# Roman Ermolaev diploma
 
 ***
 ![image](readme_header_image.png)
