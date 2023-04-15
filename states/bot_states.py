@@ -1,4 +1,4 @@
-from telebot import State
+# from telebot import State
 from telebot.handler_backends import State, StatesGroup  # States
 
 
@@ -11,8 +11,5 @@ class MyStates(StatesGroup):
     print_results = State()
     rapidapi_get_cityid = State()
     hotel_id_list = State()
-
-
-class SelectDates(StatesGroup):
-    start_select_date_in = State()
-    select_date_in = State()
+    check_in = State
+    check_out = State

@@ -1,9 +1,35 @@
-import telebot
-import constants
-from telebot import types
-from loader import bot
+"""
+Simple time range limit.
+"""
+
+from telebot import TeleBot
+from datetime import date
+
+from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
+
+bot = TeleBot("5353535107:AAEPSYNZarSnJY1hcQr11WVCPMGxyZp4PgA")
 
 
-@bot.message_handler(commands=["command"])  # В commands может быть несколько разных команд
-def answer(message):
-    command = message.split(maxsplit=1)[1]  # В переменной будет всё,что идёт после /command
+@bot.message_handler(commands=['start'])
+def start(m):
+    calendar, step = DetailedTelegramCalendar(max_date=date.today()).build()
+    bot.send_message(m.chat.id,
+                     f"Select {LSTEP[step]}",
+                     reply_markup=calendar)
+
+
+@bot.callback_query_handler(func=DetailedTelegramCalendar.func())
+def cal(c):
+    result, key, step = DetailedTelegramCalendar(max_date=date.today()).process(c.data)
+    if not result and key:
+        bot.edit_message_text(f"Select {LSTEP[step]}",
+                              c.message.chat.id,
+                              c.message.message_id,
+                              reply_markup=key)
+    elif result:
+        bot.edit_message_text(f"You selected {result}",
+                              c.message.chat.id,
+                              c.message.message_id)
+
+
+bot.polling()

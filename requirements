@@ -1,0 +1,9 @@
+python-dotenv==0.21.1
+#telebot==0.0.4
+#aiogram
+
+telebot~=0.0.4
+requests~=2.28.2
+peewee
+loguru
+#jsonpickle
