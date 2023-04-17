@@ -39,17 +39,20 @@ def get_request(url, params):
         if response.status_code == codes.ok:
             # return response.json()
             cities = list()
-            cities_dict = dict()
+            # cities_dict = dict()
             response_text = response.text
             response_dict = ast.literal_eval(response_text)
             for i in response_dict['sr']:
                 # Возможно ключи стоит поправить - проверьте работоспособность
                 cities.append(
                     dict(id=i['gaiaId'],
-                    region_name=i['regionNames']['fullName'])
+                         region_name=i['regionNames']['fullName'])
                 )
             return cities
-    except BaseException:
+
+    except Exception as e:
+        print(e)
+        #    except BaseException:
         ...
 
 

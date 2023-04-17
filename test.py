@@ -1,35 +1,12 @@
-"""
-Simple time range limit.
-"""
+my_dict = {'@type': 'gaiaRegionResult', 'index': '0', 'gaiaId': '660', 'type': 'CITY',
+           'regionNames': {'fullName': 'Бостон, Suffolk County, Массачусетс, США', 'shortName': 'Бостон',
+                           'displayName': 'Бостон, Suffolk County, Массачусетс, США', 'primaryDisplayName': 'Бостон',
+                           'secondaryDisplayName': 'Suffolk County, Массачусетс, США', 'lastSearchName': 'Бостон'},
+           'essId': {'sourceName': 'GAI', 'sourceId': '660'}, 'coordinates': {'lat': '42.35936', 'long': '-71.05979'},
+           'hierarchyInfo': {'country': {'name': 'Соединенные Штаты', 'isoCode2': 'US', 'isoCode3': 'USA'}}}
+result = list()
+result.append(
+    dict(id=my_dict['gaiaId'],
+         region_name=my_dict['regionNames']['fullName']))
 
-from telebot import TeleBot
-from datetime import date
-
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
-
-bot = TeleBot("5353535107:AAEPSYNZarSnJY1hcQr11WVCPMGxyZp4PgA")
-
-
-@bot.message_handler(commands=['start'])
-def start(m):
-    calendar, step = DetailedTelegramCalendar(max_date=date.today()).build()
-    bot.send_message(m.chat.id,
-                     f"Select {LSTEP[step]}",
-                     reply_markup=calendar)
-
-
-@bot.callback_query_handler(func=DetailedTelegramCalendar.func())
-def cal(c):
-    result, key, step = DetailedTelegramCalendar(max_date=date.today()).process(c.data)
-    if not result and key:
-        bot.edit_message_text(f"Select {LSTEP[step]}",
-                              c.message.chat.id,
-                              c.message.message_id,
-                              reply_markup=key)
-    elif result:
-        bot.edit_message_text(f"You selected {result}",
-                              c.message.chat.id,
-                              c.message.message_id)
-
-
-bot.polling()
+print(result)

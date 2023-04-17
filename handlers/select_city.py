@@ -12,6 +12,7 @@ def start_ex(message):
         data['city'] = message.text
 
     location_list = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')     #предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
+    print(location_list)
 #    location_id = location_json['sr'][0]['gaiaId']
     bot.send_message(message.chat.id,   " name = " +
                                         location_list[0]['region_name'] +
