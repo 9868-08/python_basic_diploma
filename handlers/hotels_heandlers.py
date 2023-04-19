@@ -22,6 +22,6 @@ def start_highprice(message):
     # diploma_database.Hotel_search(data['selected_command'])
     # request = diploma_database.Hotel_search
     bot.set_state(message.from_user.id, bot_states.MyStates.city, message.chat.id)
-    get_checkin.create_calendar()
+#    get_checkin.create_calendar(1)
     # create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
     return

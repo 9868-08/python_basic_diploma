@@ -44,10 +44,11 @@ def get_request(url, params):
             response_dict = ast.literal_eval(response_text)
             for i in response_dict['sr']:
                 # Возможно ключи стоит поправить - проверьте работоспособность
-                cities.append(
-                    dict(id=i['gaiaId'],
-                         region_name=i['regionNames']['fullName'])
-                )
+                if id == i[cityId]:
+                    cities.append(
+                        dict(id=i[cityId],
+                             region_name=i['regionNames']['fullName'])
+                    )
             return cities
 
     except Exception as e:

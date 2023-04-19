@@ -1,5 +1,4 @@
 import sys
-# from asyncore import dispatcher
 
 from loader import bot
 # from utils.set_bot_commands import set_default_commands
