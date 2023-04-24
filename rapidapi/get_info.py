@@ -43,18 +43,18 @@ def get_request(url, params):
             response_text = response.text
             response_dict = ast.literal_eval(response_text)
             for i in response_dict['sr']:
-                # Возможно ключи стоит поправить - проверьте работоспособность
-                if id == i[cityId]:
+                if 'gaiaId' in i:
                     cities.append(
-                        dict(id=i[cityId],
+                        dict(id=i['gaiaId'],
                              region_name=i['regionNames']['fullName'])
                     )
+            #               continue
             return cities
 
     except Exception as e:
         print(e)
         #    except BaseException:
-        ...
+        return cities
 
 
 def post_request(method_endswith, params):
