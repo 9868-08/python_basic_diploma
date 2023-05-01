@@ -13,3 +13,4 @@ class MyStates(StatesGroup):
     hotel_id_list = State()
     check_in = State
     check_out = State
+    city_detail = State

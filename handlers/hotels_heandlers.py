@@ -1,14 +1,15 @@
 from loader import bot
 from states import bot_states
-from database import diploma_database
-import jsonpickle
+# from database import diploma_database
 import json
-from datetime import date
-from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
+import jsonpickle
+
+# from datetime import date
+# from telegram_bot_calendar import DetailedTelegramCalendar, LSTEP
 
 # from handlers.work_with_hotels_handlers.city_handlers import select_city
-import time
-from handlers import get_checkin
+# import time
+# from handlers import get_checkin
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])

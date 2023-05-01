@@ -1,30 +1,31 @@
-import rapidapi.get_info
 from states import bot_states
 from telebot.storage import StateMemoryStorage
 from loader import bot
-from rapidapi import get_info
+import test
+import rapidapi.get_info
+import mk_telegram_inline_keyboard
+
 state_storage = StateMemoryStorage()
 
 
 @bot.message_handler(state=bot_states.MyStates.city)
-def start_ex(message):
+def MyStates_city(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
 
-    location_list = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')     #предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
-#    location_id = location_json['sr'][0]['gaiaId']
-    bot.send_message(message.chat.id,   " name = " +
-                                        location_list[0]['region_name'] +
-                                        "\nid= " +
-                                        location_list[0]['id'])
+    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"},
+                                                  'GET')  # предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
+    #    location_id = location_json['sr'][0]['gaiaId']
+    bot.send_message(message.chat.id, " location_dict = " + str(location_dict))
 
+    print(location_dict)
     bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
     bot.send_message(message.chat.id, 'Now write how much hotels to search')
     return
 
 
 @bot.message_handler(state=bot_states.MyStates.how_much_hotels)
-def name_get(message):
+def MyStates_how_much_hotels(message):
     bot.send_message(message.chat.id, 'Need photos?')
     bot.set_state(message.from_user.id, bot_states.MyStates.need_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
@@ -32,7 +33,7 @@ def name_get(message):
 
 
 @bot.message_handler(state=bot_states.MyStates.need_photos)
-def name_get(message):
+def MyStates_need_photos(message):
     if message.text == "Y":
         bot.send_message(message.chat.id, 'How much photos?')
         bot.set_state(message.from_user.id, bot_states.MyStates.print_results, message.chat.id)
@@ -48,8 +49,8 @@ def name_get(message):
 
 
 @bot.message_handler(state=bot_states.MyStates.print_results)
-def ready_for_answer(message):
-
+def print_results(message):
+    data = dict()
     data['city'] = "Boston"
     data['how_much_hotels'] = 2
     data['need_photos'] = "Y"
@@ -66,10 +67,13 @@ def ready_for_answer(message):
         bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
 
-#    hotel_id_list = rapidapi.get_info.def_rapidapy_start(data['city'])
-    location_json = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')     #предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
-    location_id = location_json['sr'][0]['gaiaId']
-#    hotel_id_json = def_hotel_id(location_id)
+    # предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
+    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')
+#    location_id = location_json['sr'][0]['gaiaId']
+    location_id = mk_telegram_inline_keyboard.get_location_id(message, location_dict)
+#    location_id = mk_telegram_inline_keyboard.get_location_id(location_dict)
+    #    hotel_id_json = def_hotel_id(location_id)
+
     payload = {
         "currency": "USD",
         "eapid": 1,
@@ -104,17 +108,17 @@ def ready_for_answer(message):
     hotel_id_json = rapidapi.get_info.api_request('properties/v2/list', payload, 'POST')
     parsed = hotel_id_json['data']['propertySearch']
     hotel_id_list = []
-    #import pprint
+    # import pprint
     count = 0
     for item in parsed['properties']:
-        #print (count, int(data['how_much_photos']))
-        if count+1 > int(data['how_much_hotels']):
-          break
+        # print (count, int(data['how_much_photos']))
+        if count + 1 > int(data['how_much_hotels']):
+            break
         hotel_id = int(item['id'])
-        payload = {"currency": "USD","eapid": 1,"locale": "en_US","siteId": 300000001,"propertyId": hotel_id}
+        payload = {"currency": "USD", "eapid": 1, "locale": "en_US", "siteId": 300000001, "propertyId": hotel_id}
         hotel_id_list.append(hotel_id)
         print(item['name'])
-    #    pprint.pprint(item)
-        bot.send_message(message.chat.id, 'hotelname='+item['name']+'photo'+str(item['propertyImage']))
-        count +=1
+        #    pprint.pprint(item)
+        bot.send_message(message.chat.id, 'hotelname=' + item['name'] + 'photo' + str(item['propertyImage']))
+        count += 1
     return hotel_id_list
