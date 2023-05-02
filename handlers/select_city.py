@@ -18,7 +18,6 @@ def MyStates_city(message):
     #    location_id = location_json['sr'][0]['gaiaId']
     bot.send_message(message.chat.id, " location_dict = " + str(location_dict))
 
-    print(location_dict)
     bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
     bot.send_message(message.chat.id, 'Now write how much hotels to search')
     return

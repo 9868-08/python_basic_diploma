@@ -11,15 +11,15 @@ crossIcon = u"\u274C"
 
 
 def get_location_id(message, location_dict):
-    location_list = [{'id': '660', 'region_name': 'Бостон, Suffolk County, Массачусетс, США'},
+    '''location_dict = [{'id': '660', 'region_name': 'Бостон, Suffolk County, Массачусетс, США'},
                      {'id': '6340396', 'region_name': 'Даунтаун-Бостон, Бостон, Массачусетс, США'},
                      {'id': '5459778', 'region_name': 'Бостон, Массачусетс, США (BOS-Логан, международный)'},
-                     {'id': '3000448054', 'region_name': 'Бостон, Нью-Йорк, США'}]
-    # print(location_list)
+                     {'id': '3000448054', 'region_name': 'Бостон, Нью-Йорк, США'}]'''
+    # print(location_dict)
     # print(stringList)
-    # stringList = location_list
-
-    print('def get_location_id')
+    # stringList = location_dict
+    bot.send_message(message.chat.id, 'location_dic, location_dict = ' + str(location_dict))
+#    print('def get_location_id')
     bot.set_state(message.from_user.id, bot_states.MyStates.city_detail, message.chat.id)
 
 
@@ -68,8 +68,8 @@ def handle_query(call):
                               parse_mode='HTML')
 
 
-# location_list = [{'id': '660', 'region_name': 'Бостон, Suffolk County, Массачусетс, США'}, {'id': '6340396', 'region_name': 'Даунтаун-Бостон, Бостон, Массачусетс, США'}, {'id': '5459778', 'region_name': 'Бостон, Массачусетс, США (BOS-Логан, международный)'}, {'id': '3000448054', 'region_name': 'Бостон, Нью-Йорк, США'}]
-# print(location_list)
+# location_dict = [{'id': '660', 'region_name': 'Бостон, Suffolk County, Массачусетс, США'}, {'id': '6340396', 'region_name': 'Даунтаун-Бостон, Бостон, Массачусетс, США'}, {'id': '5459778', 'region_name': 'Бостон, Массачусетс, США (BOS-Логан, международный)'}, {'id': '3000448054', 'region_name': 'Бостон, Нью-Йорк, США'}]
+# print(location_dict)
 '''while True:
     try:
         bot.polling(none_stop=True, interval=0, timeout=0)
