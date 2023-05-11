@@ -16,7 +16,7 @@ def MyStates_city(message):
     location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"},
                                                   'GET')  # предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
     #    location_id = location_json['sr'][0]['gaiaId']
-    bot.send_message(message.chat.id, " location_dict = " + str(location_dict))
+#    bot.send_message(message.chat.id, " location_dict = " + str(location_dict))
 
     bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
     bot.send_message(message.chat.id, 'Now write how much hotels to search')
@@ -118,6 +118,8 @@ def print_results(message):
         hotel_id_list.append(hotel_id)
         print(item['name'])
         #    pprint.pprint(item)
-        bot.send_message(message.chat.id, 'hotelname=' + item['name'] + 'photo' + str(item['propertyImage']))
+        bot.send_message(message.chat.id, 'найден отель = ' + item['name'])
+        # bot.send_photo(str(item['propertyImage']['image']['url']))
+        bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']), caption='фото в отеле '+ item['name'])
         count += 1
     return hotel_id_list
