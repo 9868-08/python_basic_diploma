@@ -46,7 +46,7 @@ def get_request(url, params):
                 if 'gaiaId' in i:
                     cities.append(dict(id=i['gaiaId'], region_name=i['regionNames']['fullName']))
                     cities_dict[i['gaiaId']] = i['regionNames']['fullName']
-            print('cities_dict= ', cities_dict)
+            # print('cities_dict= ', cities_dict)
             return cities_dict
 
     except Exception as e:

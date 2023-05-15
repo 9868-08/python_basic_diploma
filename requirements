@@ -7,3 +7,4 @@ requests~=2.28.2
 peewee
 loguru
 jsonpickle
+python-telegram-bot
