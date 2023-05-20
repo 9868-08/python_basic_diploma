@@ -17,8 +17,9 @@ def MyStates_city(message):
 
     location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')
 
-    mk_telegram_inline_keyboard.handle_command_adminwindow(message, location_dict)
-    bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
+#    handlers.hotels_heandlers.handle_command_adminwindow(message, location_dict)
+    bot.set_state(message.from_user.id, bot_states.MyStates.city_detail, message.chat.id)
+    # bot.set_state(message.from_user.id, bot_states.MyStates.how_much_hotels, message.chat.id)
     bot.send_message(message.chat.id, 'Now write how much hotels to search')
     return
 
@@ -67,9 +68,9 @@ def print_results(message):
     bot.delete_state(message.from_user.id, message.chat.id)
 
     # предоставляет ответ по выбранной локации из которого нужно вытянуть id локации
-    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')
+#    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": 'Boston', "locale": "ru_RU"}, 'GET')
 #    location_id = location_json['sr'][0]['gaiaId']
-    location_id = mk_telegram_inline_keyboard.get_location_id(message, location_dict)
+#    location_id = mk_telegram_inline_keyboard.get_location_id(message, location_dict)
 #    location_id = mk_telegram_inline_keyboard.get_location_id(location_dict)
     #    hotel_id_json = def_hotel_id(location_id)
 

@@ -6,7 +6,7 @@ from telebot import custom_filters
 import handlers
 from loguru import logger
 import logging
-import mk_telegram_inline_keyboard
+# import mk_telegram_inline_keyboard
 
 bot.add_custom_filter(custom_filters.StateFilter(bot))
 bot.add_custom_filter(custom_filters.IsDigitFilter())

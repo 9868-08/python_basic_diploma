@@ -6,6 +6,7 @@ from loader import bot
 from states import bot_states
 from requests import get, codes
 import ast
+import os
 
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
@@ -25,8 +26,9 @@ def api_request(method_endswith,  # Меняется в зависимости �
 
 
 def get_request(url, params):
+    from config_data.config import RAPID_API_KEY
     headers = {
-        "X-RapidAPI-Key": "7d70182871msh0110c820c62cce9p13613fjsna334f8c7dfe3",
+        "X-RapidAPI-Key": RAPID_API_KEY,
         "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
     }
     try:
@@ -56,6 +58,7 @@ def get_request(url, params):
 
 
 def post_request(method_endswith, params):
+    from config_data.config import RAPID_API_KEY
     # payload = params
     payload = {
         "currency": "USD",
@@ -89,7 +92,7 @@ def post_request(method_endswith, params):
     }
     headers = {
         "content-type": "application/json",
-        "X-RapidAPI-Key": "f11fe670bamshdaffc29f3f33e2bp19bde9jsn5f0726b4228a",
+        "X-RapidAPI-Key": RAPID_API_KEY,
         "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
     }
 
