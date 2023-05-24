@@ -101,3 +101,12 @@ def post_request(method_endswith, params):
     if response.status_code == codes.ok:
         return response.json()
     return response.json()
+
+
+def city_search(city_name):
+    query_string = {'q': city_name, 'locale': 'ru_RU'}
+    response = api_request(method_endswith='locations/v3/search',
+                           params=query_string,
+                           method_type='GET')
+
+    return response

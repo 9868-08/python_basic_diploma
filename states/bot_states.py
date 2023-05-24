@@ -14,6 +14,8 @@ class MyStates(StatesGroup):
     check_in = State
     check_out = State
     city_detail = State
+    location_confirmation = State()
+
 
 class DIPLOMA_STATE(StatesGroup):
     location_dict = State
