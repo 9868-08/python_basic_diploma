@@ -1,1 +1,1 @@
-from . import bot_keaboard
+from . import bot_keyboard

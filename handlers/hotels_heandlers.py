@@ -7,8 +7,8 @@ import json
 import jsonpickle
 from telebot.types import Message
 from rapidapi.get_info import city_search
-from keyboard.bot_keaboard import makeKeyboard
-
+from keyboard.bot_keyboard import makeKeyboard
+from keyboard.bot_keyboard import handle_query
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
