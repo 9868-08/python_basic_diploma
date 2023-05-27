@@ -9,6 +9,7 @@ from telebot.types import Message
 from rapidapi.get_info import city_search
 from keyboard.bot_keyboard import makeKeyboard
 from keyboard.bot_keyboard import handle_query
+from rapidapi.get_info import get_request
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
@@ -38,14 +39,13 @@ def start_highprice(message):
 @bot.message_handler(state=MyStates.city)
 def city_answer(message: Message):
 
-    with bot.retrieve_data(message.from_user.id) as data: # Сохраняем имя города
+    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем имя города
         data['city'] = message.text
 
-    cities = city_search(message.text) # Делаем запрос к API
-    keyboard = makeKeyboard(cities) # Формируем клавиатуры
+    cities = city_search(message.text)  # Делаем запрос к API
+    keyboard = makeKeyboard(cities)  # Формируем клавиатуры
 
-
-    # Отправляем пользователю
+# Отправляем пользователю
     bot.send_message(chat_id=message.from_user.id,
                      text='Уточни выбор:',
                      reply_markup=keyboard
@@ -53,25 +53,12 @@ def city_answer(message: Message):
     bot.set_state(message.from_user.id, MyStates.location_confirmation)
 
 
-@bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
-def location_processing(call_button: CallbackQuery):
-
-    with bot.retrieve_data(call_button.from_user.id) as data: # Сохраняем выбранную локацию
-        data['city_id'] = call_button.data
-
-    # Продолжаем диалог
-#    bot.send_message(chat_id=call_button.from_user.id,
-#                     text='Следующий вопрос',
-#                     )
-#    bot.set_state(...
-
-
 @bot.message_handler(state=MyStates.city)
 def MyStates_city(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['city'] = message.text
 
-    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')
+#    location_dict = rapidapi.get_info.api_request('locations/v3/search', {"q": data['city'], "locale": "ru_RU"}, 'GET')
 
 #    handlers.hotels_heandlers.handle_command_adminwindow(message, location_dict)
     bot.set_state(message.from_user.id, MyStates.city_detail, message.chat.id)
@@ -123,7 +110,6 @@ def print_results(message):
         bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
 
-
     payload = {
         "currency": "USD",
         "eapid": 1,
@@ -155,7 +141,7 @@ def print_results(message):
         }}
     }
 
-    hotel_id_json = rapidapi.get_info.api_request('properties/v2/list', payload, 'POST')
+    hotel_id_json = api_request('properties/v2/list', payload, 'POST')
     parsed = hotel_id_json['data']['propertySearch']
     hotel_id_list = []
     # import pprint
