@@ -103,10 +103,10 @@ def location_processing(call_button: CallbackQuery):
     bot.send_message(chat_id=call_button.from_user.id,
                      text='Сколько отелей показать?',
                      )
-    bot.set_state(message.from_user.id, MyStates.how_much_hotels)
+    bot.set_state(call_button.data, MyStates.how_much_hotels)
 
 
-@bot.message_handler(state=MyStates.how_much_hotels)
+@bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
 def MyStates_how_much_hotels(message):
     bot.send_message(message.chat.id, 'Need photos?')
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
