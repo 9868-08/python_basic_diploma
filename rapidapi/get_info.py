@@ -96,7 +96,7 @@ def post_request(method_endswith, params):
         "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
     }
 
-    response = requests.request("POST", method_endswith, json=payload, headers=headers)
+    response = requests.request("POST", "https://hotels4.p.rapidapi.com/"+method_endswith, json=payload, headers=headers)
     #    print(response.text)
     if response.status_code == codes.ok:
         return response.json()

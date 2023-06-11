@@ -21,9 +21,10 @@ def api_request(method_endswith,  # Меняется в зависимости �
             params=params
         )
     else:
+        print('url=', url)
         return post_request(
-            url=url,
-            params=params
+            method_endswith,
+            params
         )
 
 
@@ -139,10 +140,9 @@ def print_results(message):
     payload = {
         "currency": "USD",
         "eapid": 1,
-        "locale": "ru_RU",
+        "locale": "en_US",
         "siteId": 300000001,
-        "destination": {"regionId": 660},
-        # "destination": {"regionId": location_id},
+        "destination": {"regionId": "6054439"},
         "checkInDate": {
             "day": 10,
             "month": 10,
