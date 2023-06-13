@@ -115,7 +115,23 @@ def MyStates_how_much_hotels(message):
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_hotels'] = message.text
-    bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
+    bot.set_state(message.from_user.id, MyStates.check_in, message.chat.id)
+
+
+@bot.message_handler(func=None, state=MyStates.check_in)
+def select_check_in(call_button):
+    result, keyboard, step = create_calendar(call_button, is_process=True)
+
+    if not result and keyboard:
+        # Продолжаем отсылать шаги, пока не выберут дату "result"
+        bot.edit_message_text(f'Укажите {step} заезда',
+                              call_button.from_user.id,
+                              call_button.message.message_id,
+                              reply_markup=keyboard)
+
+    elif result:
+        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
+        calendar, step = create_calendar(call_button, min_date=result)
 
 
 @bot.message_handler(state=MyStates.print_results)
@@ -171,19 +187,34 @@ def print_results(message):
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')
     parsed = hotel_id_json['data']['propertySearch']
     hotel_id_list = []
-    count = 0
+    count = 1
     for item in parsed['properties']:
         # print (count, int(data['how_much_photos']))
-        if count + 1 > int(data['how_much_hotels']):
+        if count > int(data['how_much_hotels']):
             break
         hotel_id = int(item['id'])
         # payload = {"currency": "USD", "eapid": 1, "locale": "en_US", "siteId": 300000001, "propertyId": hotel_id}
         hotel_id_list.append(hotel_id)
         print(item['name'])
         # pprint.pprint(item)
-        bot.send_message(message.chat.id, 'найден отель = ' + item['name'])
+        bot.send_message(message.chat.id, str(count)+') отель ' + item['name'])
         # bot.send_photo(str(item['propertyImage']['image']['url']))
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
     return hotel_id_list
+
+
+def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
+    if min_date is None:
+        min_date = date.today()
+
+    if is_process:
+        result, keyboard, step = DetailedTelegramCalendar(min_date=min_date, locale=locale).process(
+            call_data=callback_data.data)
+        return result, keyboard, ALL_STEPS[step]
+    else:
+        calendar, step = DetailedTelegramCalendar(current_date=min_date,
+                                                  min_date=min_date,
+                                                  locale=locale).build()
+        return calendar, ALL_STEPS[step]
