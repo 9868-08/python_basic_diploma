@@ -1,3 +1,5 @@
+from telegram_bot_calendar import DetailedTelegramCalendar
+
 from states.bot_states import MyStates
 from loader import bot
 

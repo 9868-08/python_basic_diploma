@@ -1,3 +1,6 @@
+from datetime import date
+from telegram_bot_calendar import DetailedTelegramCalendar
+
 from requests import get, codes
 from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
