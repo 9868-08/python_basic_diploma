@@ -9,6 +9,8 @@ from rapidapi.get_info import post_request
 from loader import bot
 from states.bot_states import MyStates
 
+ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}
+
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
                 params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
