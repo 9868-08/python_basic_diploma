@@ -113,6 +113,19 @@ def location_processing(call_button: CallbackQuery):
                      )
     bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
+    result, keyboard, step = create_calendar(call_button, is_process=True)
+
+    if not result and keyboard:
+        # Продолжаем отсылать шаги, пока не выберут дату "result"
+        bot.edit_message_text(f'Укажите {step} заезда',
+                              call_button.from_user.id,
+                              call_button.message.message_id,
+                              reply_markup=keyboard)
+
+    elif result:
+        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
+        calendar, step = create_calendar(call_button, min_date=result)
+
 
 @bot.message_handler(func=None, state=MyStates.how_much_hotels)
 def MyStates_how_much_hotels(message):
@@ -120,7 +133,7 @@ def MyStates_how_much_hotels(message):
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_hotels'] = message.text
-    bot.set_state(message.from_user.id, MyStates.check_in, message.chat.id)
+    bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
 
 
 @bot.message_handler(func=None, state=MyStates.check_in)
