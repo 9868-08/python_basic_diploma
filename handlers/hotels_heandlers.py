@@ -1,10 +1,17 @@
+import locale
+from datetime import date
+
 from requests import get, codes
 from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from telegram_bot_calendar import DetailedTelegramCalendar
+
 from rapidapi.get_info import post_request
 
 from loader import bot
 from states.bot_states import MyStates
+
+ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообще
 
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
@@ -101,6 +108,14 @@ def city_answer(message: Message):
 def location_processing(call_button: CallbackQuery):
     with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
         data['city_id'] = call_button.data
+
+    #    def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
+    min_date = date.today()
+
+    calendar, step = DetailedTelegramCalendar(current_date=min_date,
+                                              min_date=min_date,
+                                              locale=locale).build()
+    #            return calendar, ALL_STEPS[step]
 
     # TODO Продолжаем диалог
     bot.send_message(chat_id=call_button.from_user.id,
