@@ -1,15 +1,17 @@
 from datetime import date
-from telegram_bot_calendar import DetailedTelegramCalendar
 
 from requests import get, codes
 from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from telegram_bot_calendar import DetailedTelegramCalendar
+
 from rapidapi.get_info import post_request
 
 from loader import bot
+from config_data.config import RAPID_API_KEY
 from states.bot_states import MyStates
 
-ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}
+ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
@@ -37,8 +39,8 @@ def get_request(url, params):
     try:
         response = get(
             url,
-            headers={  # TODO Ваш словарик с ключом доступа
-                "X-RapidAPI-Key": "c7ca9cdd48msh13b9bab2e4955ffp1b87f9jsncf0790864cbc",
+            headers={
+                "X-RapidAPI-Key": RAPID_API_KEY,
                 "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
             },
             params=params,
@@ -103,7 +105,7 @@ def city_answer(message: Message):
 
 
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
-def location_processing(call_button: CallbackQuery):
+def location_processing(call_button: CallbackQuery, min_date=None, is_process=None, locale='ru'):
     with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
         data['city_id'] = call_button.data
 
@@ -111,9 +113,27 @@ def location_processing(call_button: CallbackQuery):
     bot.send_message(chat_id=call_button.from_user.id,
                      text='Сколько отелей показать?',
                      )
-    bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
-    result, keyboard, step = create_calendar(call_button, is_process=True)
+    # def location_processing(callback_data, min_date=None, is_process=None, locale='ru'):
+
+    if min_date is None:
+        min_date = date.today()
+
+    if is_process:
+        result, keyboard, step = DetailedTelegramCalendar(min_date=min_date, locale=locale).process(
+            call_data=callback_data.data)
+        return result, keyboard, ALL_STEPS[step]
+    else:
+        calendar, step = DetailedTelegramCalendar(current_date=min_date,
+                                                  min_date=min_date,
+                                                  locale=locale).build()
+        return calendar, ALL_STEPS[step]
+    bot.set_state(call_button.from_user.id, MyStates.check_in)
+
+
+@bot.callback_query_handler(func=None, state=MyStates.check_in)
+def select_check_in(call_button):
+    result, keyboard, step = location_processing(call_button, is_process=True)
 
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
@@ -124,7 +144,8 @@ def location_processing(call_button: CallbackQuery):
 
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        calendar, step = create_calendar(call_button, min_date=result)
+        calendar, step = location_processing(call_button, min_date=result)
+    bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
 @bot.message_handler(func=None, state=MyStates.how_much_hotels)
@@ -134,22 +155,6 @@ def MyStates_how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['how_much_hotels'] = message.text
     bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
-
-
-@bot.message_handler(func=None, state=MyStates.check_in)
-def select_check_in(call_button):
-    result, keyboard, step = create_calendar(call_button, is_process=True)
-
-    if not result and keyboard:
-        # Продолжаем отсылать шаги, пока не выберут дату "result"
-        bot.edit_message_text(f'Укажите {step} заезда',
-                              call_button.from_user.id,
-                              call_button.message.message_id,
-                              reply_markup=keyboard)
-
-    elif result:
-        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        calendar, step = create_calendar(call_button, min_date=result)
 
 
 @bot.message_handler(state=MyStates.print_results)
@@ -215,24 +220,9 @@ def print_results(message):
         hotel_id_list.append(hotel_id)
         print(item['name'])
         # pprint.pprint(item)
-        bot.send_message(message.chat.id, str(count)+') отель ' + item['name'])
+        bot.send_message(message.chat.id, str(count) + ') отель ' + item['name'])
         # bot.send_photo(str(item['propertyImage']['image']['url']))
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
     return hotel_id_list
-
-
-def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
-    if min_date is None:
-        min_date = date.today()
-
-    if is_process:
-        result, keyboard, step = DetailedTelegramCalendar(min_date=min_date, locale=locale).process(
-            call_data=callback_data.data)
-        return result, keyboard, ALL_STEPS[step]
-    else:
-        calendar, step = DetailedTelegramCalendar(current_date=min_date,
-                                                  min_date=min_date,
-                                                  locale=locale).build()
-        return calendar, ALL_STEPS[step]
