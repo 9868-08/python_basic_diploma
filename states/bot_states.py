@@ -17,5 +17,11 @@ class MyStates(StatesGroup):
     location_confirmation = State()
 
 
-class DIPLOMA_STATE(StatesGroup):
-    location_dict = State
+class SelectDates(StatesGroup):
+    start_select_date_in = State()
+    select_date_in = State()
+
+    start_select_date_out = State()
+    select_date_out = State()
+
+    is_date_correct = State()

@@ -8,3 +8,4 @@ peewee
 loguru
 jsonpickle
 python-telegram-bot
+python-telegram-bot-calendar
