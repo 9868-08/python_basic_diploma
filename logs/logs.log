@@ -1,0 +1,194 @@
+DEBUG:root:Error
+INFO:root:Information message
+WARNING:root:Warning
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=-1&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getMe HTTP/1.1" 200 213
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 406
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%92%D0%B2%D0%B5%D0%B4%D0%B8+%D0%B3%D0%BE%D1%80%D0%BE%D0%B4+%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0 HTTP/1.1" 200 382
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077659&timeout=20 HTTP/1.1" 200 343
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): hotels4.p.rapidapi.com:443
+DEBUG:urllib3.connectionpool:https://hotels4.p.rapidapi.com:443 "GET /locations/v3/search?q=Boston&locale=ru_RU HTTP/1.1" 200 7016
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%A3%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D1%82%D0%B5%2C+%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0%3A&reply_markup=%7B%22inline_keyboard%22%3A+%5B%5B%7B%22text%22%3A+%22%5Cu0411%5Cu043e%5Cu0441%5Cu0442%5Cu043e%5Cu043d%2C+Suffolk+County%2C+%5Cu041c%5Cu0430%5Cu0441%5Cu0441%5Cu0430%5Cu0447%5Cu0443%5Cu0441%5Cu0435%5Cu0442%5Cu0441%2C+%5Cu0421%5Cu0428%5Cu0410%22%2C+%22callback_data%22%3A+%22660%22%7D%5D%2C+%5B%7B%22text%22%3A+%22%5Cu0411%5Cu043e%5Cu0441%5Cu0442%5Cu043e%5Cu043d%2C+%5Cu041d%5Cu044c%5Cu044e-%5Cu0419%5Cu043e%5Cu0440%5Cu043a%2C+%5Cu0421%5Cu0428%5Cu0410%22%2C+%22callback_data%22%3A+%223000448054%22%7D%5D%5D%7D HTTP/1.1" 200 752
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077660&timeout=20 HTTP/1.1" 200 1018
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%A3%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5+%D0%B3%D0%BE%D0%B4+%D0%B7%D0%B0%D0%B5%D0%B7%D0%B4%D0%B0&reply_markup=%7B%22inline_keyboard%22%3A+%5B%5B%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+2023%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2023_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+2024%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2024_6_24%22%7D%2C+%7B%22text%22%3A+2025%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2025_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+%22%5Cu00d7%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22%3E%3E%22%2C+%22callback_data%22%3A+%22cbcal_0_g_y_2027_6_24%22%7D%5D%2C+%5B%5D%5D%7D HTTP/1.1" 200 775
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077661&timeout=20 HTTP/1.1" 200 1052
+ERROR:TeleBot:Infinity polling exception: location_processing() got an unexpected keyword argument 'is_process'
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 90, in run
+    task(*args, **kwargs)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 6770, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/handlers/hotels_heandlers.py", line 140, in select_check_in
+    result, keyboard, step = location_processing(call_button, is_process=True)
+TypeError: location_processing() got an unexpected keyword argument 'is_process'
+
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077662&timeout=20 HTTP/1.1" 409 143
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077662&timeout=20 HTTP/1.1" 200 1052
+ERROR:TeleBot:Infinity polling exception: location_processing() got an unexpected keyword argument 'is_process'
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 90, in run
+    task(*args, **kwargs)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 6770, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/handlers/hotels_heandlers.py", line 140, in select_check_in
+    result, keyboard, step = location_processing(call_button, is_process=True)
+TypeError: location_processing() got an unexpected keyword argument 'is_process'
+
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077663&timeout=20 HTTP/1.1" 409 143
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077663&timeout=20 HTTP/1.1" 200 23
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling
+DEBUG:root:Error
+INFO:root:Information message
+WARNING:root:Warning
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=-1&timeout=20 HTTP/1.1" 200 406
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getMe HTTP/1.1" 200 213
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=1&timeout=20 HTTP/1.1" 200 406
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%92%D0%B2%D0%B5%D0%B4%D0%B8+%D0%B3%D0%BE%D1%80%D0%BE%D0%B4+%D0%BF%D0%BE%D0%B8%D1%81%D0%BA%D0%B0 HTTP/1.1" 200 382
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077664&timeout=20 HTTP/1.1" 200 343
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): hotels4.p.rapidapi.com:443
+DEBUG:urllib3.connectionpool:https://hotels4.p.rapidapi.com:443 "GET /locations/v3/search?q=Boston&locale=ru_RU HTTP/1.1" 200 7016
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%A3%D1%82%D0%BE%D1%87%D0%BD%D0%B8%D1%82%D0%B5%2C+%D0%BF%D0%BE%D0%B6%D0%B0%D0%BB%D1%83%D0%B9%D1%81%D1%82%D0%B0%3A&reply_markup=%7B%22inline_keyboard%22%3A+%5B%5B%7B%22text%22%3A+%22%5Cu0411%5Cu043e%5Cu0441%5Cu0442%5Cu043e%5Cu043d%2C+Suffolk+County%2C+%5Cu041c%5Cu0430%5Cu0441%5Cu0441%5Cu0430%5Cu0447%5Cu0443%5Cu0441%5Cu0435%5Cu0442%5Cu0441%2C+%5Cu0421%5Cu0428%5Cu0410%22%2C+%22callback_data%22%3A+%22660%22%7D%5D%2C+%5B%7B%22text%22%3A+%22%5Cu0411%5Cu043e%5Cu0441%5Cu0442%5Cu043e%5Cu043d%2C+%5Cu041d%5Cu044c%5Cu044e-%5Cu0419%5Cu043e%5Cu0440%5Cu043a%2C+%5Cu0421%5Cu0428%5Cu0410%22%2C+%22callback_data%22%3A+%223000448054%22%7D%5D%5D%7D HTTP/1.1" 200 752
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077665&timeout=20 HTTP/1.1" 200 1018
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%A3%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5+%D0%B3%D0%BE%D0%B4+%D0%B7%D0%B0%D0%B5%D0%B7%D0%B4%D0%B0&reply_markup=%7B%22inline_keyboard%22%3A+%5B%5B%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+2023%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2023_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+2024%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2024_6_24%22%7D%2C+%7B%22text%22%3A+2025%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2025_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+%22%5Cu00d7%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22%3E%3E%22%2C+%22callback_data%22%3A+%22cbcal_0_g_y_2027_6_24%22%7D%5D%2C+%5B%5D%5D%7D HTTP/1.1" 200 775
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077666&timeout=20 HTTP/1.1" 200 1052
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "POST /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/sendMessage?chat_id=418832166&text=%D0%A3%D0%BA%D0%B0%D0%B6%D0%B8%D1%82%D0%B5+%D0%B3%D0%BE%D0%B4+%D0%B7%D0%B0%D0%B5%D0%B7%D0%B4%D0%B0&reply_markup=%7B%22inline_keyboard%22%3A+%5B%5B%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+2023%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2023_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+2024%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2024_6_24%22%7D%2C+%7B%22text%22%3A+2025%2C+%22callback_data%22%3A+%22cbcal_0_s_y_2025_6_24%22%7D%5D%2C+%5B%7B%22text%22%3A+%22%5Cu00d7%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22+%22%2C+%22callback_data%22%3A+%22cbcal_0_n%22%7D%2C+%7B%22text%22%3A+%22%3E%3E%22%2C+%22callback_data%22%3A+%22cbcal_0_g_y_2027_6_24%22%7D%5D%2C+%5B%5D%5D%7D HTTP/1.1" 200 775
+ERROR:TeleBot:Infinity polling exception: cannot unpack non-iterable NoneType object
+ERROR:TeleBot:Exception traceback:
+Traceback (most recent call last):
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 955, in infinity_polling
+    self.polling(non_stop=True, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1043, in polling
+    self.__threaded_polling(non_stop=non_stop, interval=interval, timeout=timeout, long_polling_timeout=long_polling_timeout,
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1118, in __threaded_polling
+    raise e
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 1074, in __threaded_polling
+    self.worker_pool.raise_exceptions()
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 147, in raise_exceptions
+    raise self.exception_info
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/util.py", line 90, in run
+    task(*args, **kwargs)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/venv/lib/python3.10/site-packages/telebot/__init__.py", line 6770, in _run_middlewares_and_handler
+    result = handler['function'](message)
+  File "/Users/20133544/PycharmProjects/python_basic_diploma_dev_5/handlers/hotels_heandlers.py", line 140, in select_check_in
+    result, keyboard, step = location_processing(call_button)
+TypeError: cannot unpack non-iterable NoneType object
+
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 409 143
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:Starting new HTTPS connection (1): api.telegram.org:443
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+DEBUG:urllib3.connectionpool:https://api.telegram.org:443 "GET /bot5353535107:AAHmqF4kmEv6BGk0atUTrUpKqrG7vjsC3zQ/getUpdates?offset=217077667&timeout=20 HTTP/1.1" 200 23
+ERROR:TeleBot:Infinity polling: polling exited
+ERROR:TeleBot:Break infinity polling

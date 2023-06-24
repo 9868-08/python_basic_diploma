@@ -90,11 +90,11 @@ def start_scenario(message: Message):
 
 @bot.message_handler(state=MyStates.city)
 def city_answer(message: Message):
-    with bot.retrieve_data(message.from_user.id) as data:  # TODO Сохраняем имя города
+    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем имя города
         data['city'] = message.text
 
-    cities = city_search(message.text)  # TODO Делаем запрос к API
-    keyboard = city_markup(cities)  # TODO Формируем клавиатуры
+    cities = city_search(message.text)  # Делаем запрос к API
+    keyboard = city_markup(cities)  # Формируем клавиатуры
 
     # TODO Отправляем пользователю
     bot.send_message(chat_id=message.from_user.id,
@@ -105,17 +105,22 @@ def city_answer(message: Message):
 
 
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
-def location_processing(call_button: CallbackQuery, min_date=None, is_process=None, locale='ru'):
+def location_processing(call_button: CallbackQuery):
     with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
         data['city_id'] = call_button.data
 
-    # TODO Продолжаем диалог
-    bot.send_message(chat_id=call_button.from_user.id,
-                     text='Сколько отелей показать?',
-                     )
+    # формируем календарь
+    calendar, step = create_calendar(call_button)
 
-    # def location_processing(callback_data, min_date=None, is_process=None, locale='ru'):
+    # отправляем календарь пользователю
+    bot.send_message(call_button.from_user.id, f"Укажите {step} заезда", reply_markup=calendar)
 
+    bot.set_state(call_button.from_user.id, MyStates.check_in)
+
+    # bot.send_message(chat_id=call_button.from_user.id, text='Сколько отелей показать?')
+
+
+def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
     if min_date is None:
         min_date = date.today()
 
@@ -128,12 +133,11 @@ def location_processing(call_button: CallbackQuery, min_date=None, is_process=No
                                                   min_date=min_date,
                                                   locale=locale).build()
         return calendar, ALL_STEPS[step]
-    bot.set_state(call_button.from_user.id, MyStates.check_in)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.check_in)
 def select_check_in(call_button):
-    result, keyboard, step = location_processing(call_button, is_process=True)
+    result, keyboard, step = location_processing(call_button)
 
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
