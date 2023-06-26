@@ -157,7 +157,7 @@ def select_check_in(call_button):
                               call_button.message.message_id,
                               reply_markup=keyboard)
         calendar, step = create_calendar(call_button, min_date=result)
-    bot.set_state(message.from_user.id, MyStates.how_much_hotels)
+    bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
 @bot.message_handler(func=None, state=MyStates.how_much_hotels)
