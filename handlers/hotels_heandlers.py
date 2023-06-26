@@ -137,7 +137,7 @@ def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
 
 @bot.callback_query_handler(func=None, state=MyStates.check_in)
 def select_check_in(call_button):
-    result, keyboard, step = location_processing(call_button)
+    result, keyboard, step = create_calendar(call_button, is_process=True)
 
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
@@ -148,8 +148,8 @@ def select_check_in(call_button):
 
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        calendar, step = location_processing(call_button, min_date=result)
-    bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+        calendar, step = create_calendar(call_button, min_date=result)
+    bot.set_state(message.from_user.id, MyStates.how_much_hotels)
 
 
 @bot.message_handler(func=None, state=MyStates.how_much_hotels)
