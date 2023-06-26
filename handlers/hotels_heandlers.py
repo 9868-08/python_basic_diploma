@@ -145,9 +145,17 @@ def select_check_in(call_button):
                               call_button.from_user.id,
                               call_button.message.message_id,
                               reply_markup=keyboard)
+        bot.send_message(call_button.from_user.id, f"Укажите {step} выезда", reply_markup=calendar)
+
+        bot.set_state(call_button.from_user.id, MyStates.check_in)
+
 
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
+        bot.edit_message_text(f'Укажите {step} отъезда',
+                              call_button.from_user.id,
+                              call_button.message.message_id,
+                              reply_markup=keyboard)
         calendar, step = create_calendar(call_button, min_date=result)
     bot.set_state(message.from_user.id, MyStates.how_much_hotels)
 
