@@ -138,7 +138,6 @@ def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
 @bot.callback_query_handler(func=None, state=MyStates.check_in)
 def select_check_in(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
-
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
         bot.edit_message_text(f'Укажите {step} заезда',
@@ -147,37 +146,38 @@ def select_check_in(call_button):
                               reply_markup=keyboard)
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
+        with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
             data['city_id'] = call_button.data
-
         # формируем календарь
         calendar, step = create_calendar(call_button)
-
         # отправляем календарь пользователю
         bot.send_message(call_button.from_user.id, f"Укажите {step} выезда", reply_markup=calendar)
-
         bot.set_state(call_button.from_user.id, MyStates.check_out)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
 def select_check_out(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
-
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
         bot.edit_message_text(f'Укажите {step} выезда',
                               call_button.from_user.id,
                               call_button.message.message_id,
                               reply_markup=keyboard)
-
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        # calendar, step = create_calendar(call_button, min_date=result)
-        bot.set_state(call_button.from_user, MyStates.how_much_hotels)
+        with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную дату заезда
+            data['check_in'] = call_button.data
+        # формируем календарь
+        calendar, step = create_calendar(call_button)
+        # отправляем календарь пользователю
+        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
 def MyStates_how_much_hotels(message):
+    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
+        data['check_out'] = message.data
     bot.send_message(message.chat.id, 'Need photos?')
     bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
