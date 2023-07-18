@@ -145,7 +145,6 @@ def select_check_in(call_button):
                               call_button.from_user.id,
                               call_button.message.message_id,
                               reply_markup=keyboard)
-
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
         with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
