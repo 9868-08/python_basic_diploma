@@ -156,7 +156,7 @@ def select_check_in(call_button):
 
 
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
-def select_check_out(call_button):
+def select_check_out(call_button, message):
     result, keyboard, step = create_calendar(call_button, is_process=True)
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
@@ -171,7 +171,8 @@ def select_check_out(call_button):
         # формируем календарь
         calendar, step = create_calendar(call_button)
         # отправляем календарь пользователю
-        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+        bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
+#        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
