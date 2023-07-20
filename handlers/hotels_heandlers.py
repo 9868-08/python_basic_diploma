@@ -94,12 +94,23 @@ def select_check_out(call_button):
                               call_button.message.message_id,
                               reply_markup=keyboard)
     elif result:
+<<<<<<< HEAD
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
         bot.send_message(call_button.from_user.id, 'Введите количество отелей')
         # import telebot
         # from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+=======
+        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
+        with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную дату заезда
+            data['check_in'] = call_button.data
+        # формируем календарь
+        calendar, step = create_calendar(call_button)
+        # отправляем календарь пользователю
+        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+#        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+>>>>>>> 350e3c5 (TypeError: select_check_out() missing 1 required positional argument: 'message')
 
 
 @bot.message_handler(state=MyStates.how_much_hotels)
