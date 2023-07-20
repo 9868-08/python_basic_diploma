@@ -171,7 +171,7 @@ def select_check_out(call_button, message):
         # формируем календарь
         calendar, step = create_calendar(call_button)
         # отправляем календарь пользователю
-        bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
+        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 #        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
