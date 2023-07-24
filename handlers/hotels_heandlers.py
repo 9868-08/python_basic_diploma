@@ -156,8 +156,9 @@ def select_check_in(call_button):
 
 
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
-def select_check_out(call_button, message):
+def select_check_out(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
+    print(call_button.data)
     if not result and keyboard:
         # Продолжаем отсылать шаги, пока не выберут дату "result"
         bot.edit_message_text(f'Укажите {step} выезда',
@@ -172,11 +173,13 @@ def select_check_out(call_button, message):
         calendar, step = create_calendar(call_button)
         # отправляем календарь пользователю
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-#        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+#        bot.set_state(message.from_user.id, MyStates.how_much_hotels)
+#    print(call_button)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
-def MyStates_how_much_hotels(message):
+# @bot.message_handler(state=MyStates.how_much_hotels)
+def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
         data['check_out'] = message.data
     bot.send_message(message.chat.id, 'Need photos?')
