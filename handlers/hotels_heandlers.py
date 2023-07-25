@@ -147,7 +147,7 @@ def select_check_in(call_button):
     elif result:
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
         with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
-            data['city_id'] = call_button.data
+            data['check_in'] = call_button.data
         # формируем календарь
         calendar, step = create_calendar(call_button)
         # отправляем календарь пользователю
@@ -158,35 +158,27 @@ def select_check_in(call_button):
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
 def select_check_out(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
-    print(call_button.data)
     if not result and keyboard:
-        # Продолжаем отсылать шаги, пока не выберут дату "result"
         bot.edit_message_text(f'Укажите {step} выезда',
                               call_button.from_user.id,
                               call_button.message.message_id,
                               reply_markup=keyboard)
     elif result:
-        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную дату заезда
-            data['check_in'] = call_button.data
-        # формируем календарь
-        calendar, step = create_calendar(call_button)
-        # отправляем календарь пользователю
+        with bot.retrieve_data(call_button.from_user.id) as data:
+            data['check_out'] = result
+        bot.send_message(call_button.from_user.id, 'Искать фотографии?')
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-#        bot.set_state(message.from_user.id, MyStates.how_much_hotels)
-#    print(call_button)
 
 
-@bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
-# @bot.message_handler(state=MyStates.how_much_hotels)
+@bot.message_handler(state=MyStates.how_much_hotels)
 def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
-        data['check_out'] = message.data
-    bot.send_message(message.chat.id, 'Need photos?')
-    bot.set_state(message.from_user.id, MyStates.need_photos, message.chat.id)
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['how_much_hotels'] = message.text
-    bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
+        data['need_photos'] = message.data
+    if data['need_photos'] != "N" or data['need_photos'] != "n" or data['need_photos'] != "now":
+        bot.set_state(message.from_user.id, MyStates.need_photos, message.print_results.id)
+    else:
+        bot.send_message(message.chat.id, 'how much photos?')
+    bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
 
 
 @bot.message_handler(state=MyStates.print_results)
