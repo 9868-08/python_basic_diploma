@@ -172,13 +172,14 @@ def select_check_out(call_button):
 
 @bot.message_handler(state=MyStates.how_much_hotels)
 def how_much_hotels(message):
-    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
-        data['need_photos'] = message.data
-    if data['need_photos'] != "N" or data['need_photos'] != "n" or data['need_photos'] != "now":
-        bot.set_state(message.from_user.id, MyStates.need_photos, message.print_results.id)
-    else:
-        bot.send_message(message.chat.id, 'how much photos?')
-    bot.set_state(message.from_user.id, MyStates.how_much_hotels, message.chat.id)
+    #    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
+    #        data['need_photos'] = message.data
+    #    if data['need_photos'] != "N" or data['need_photos'] != "n" or data['need_photos'] != "now":
+    #        bot.set_state(message.from_user.id, MyStates.need_photos, message.print_results.id)
+    #    else:
+    #        bot.send_message(message.chat.id, 'how much photos?')
+    print(how_much_hotels)
+    bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
 
 
 @bot.message_handler(state=MyStates.print_results)
