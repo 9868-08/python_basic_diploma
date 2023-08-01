@@ -1,3 +1,4 @@
+from builtins import print
 from datetime import date
 
 from requests import get, codes
@@ -170,7 +171,8 @@ def select_check_out(call_button):
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
-@bot.message_handler(state=MyStates.how_much_hotels)
+#@bot.message_handler(state=MyStates.how_much_hotels)
+@bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
 def how_much_hotels(message):
     #    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
     #        data['need_photos'] = message.data
@@ -178,8 +180,10 @@ def how_much_hotels(message):
     #        bot.set_state(message.from_user.id, MyStates.need_photos, message.print_results.id)
     #    else:
     #        bot.send_message(message.chat.id, 'how much photos?')
-    print(how_much_hotels)
+    print("how_much_hotels")
     bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
+    print("runing how_much_hotels")
+    pass
 
 
 @bot.message_handler(state=MyStates.print_results)
@@ -190,6 +194,7 @@ def print_results(message):
     #     data['need_photos'] = "Y"
     #     data['how_much_photos'] = 2
     #
+    print("print_results")
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         data['need_photos'] = message.text
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:

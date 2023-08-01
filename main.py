@@ -11,6 +11,7 @@ import logging
 bot.add_custom_filter(custom_filters.StateFilter(bot))
 bot.add_custom_filter(custom_filters.IsDigitFilter())
 
+print("main started")
 if __name__ == '__main__':
     # set_default_commands(bot)
     bot.infinity_polling(skip_pending=True)
