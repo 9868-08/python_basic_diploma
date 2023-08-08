@@ -194,9 +194,7 @@ def print_results(message):
     #     data['need_photos'] = "Y"
     #     data['how_much_photos'] = 2
     #
-    print("print_results")
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['need_photos'] = message.text
+    print("runing print_results")
     with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
         msg = ("Ready, take a look:\n<b>"
                f"City: {data['city']}\n"
@@ -205,6 +203,9 @@ def print_results(message):
                f"how_much_photos: {message.text}</b>")
     bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
+
+    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+        data['need_photos'] = message.text
 
     payload = {
         "currency": "USD",
