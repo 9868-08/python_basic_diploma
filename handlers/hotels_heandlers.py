@@ -167,11 +167,17 @@ def select_check_out(call_button):
     elif result:
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
-        bot.send_message(call_button.from_user.id, 'Искать фотографии?')
-        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+        # bot.send_message(call_button.from_user.id, 'Искать фотографии?')
+        # import telebot
+        from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
+        poll_markup = ReplyKeyboardMarkup(one_time_keyboard=True)
+        poll_markup.add(KeyboardButton('Искать фотографии?',  request_poll=KeyboardButtonPollType(type='quiz')))
+        # from my experience, only quiz type and regular type polls can be send.
+        remove_board = ReplyKeyboardRemove()
+        bot.set_state(call_button.from_user.id, MyStates.print_results)
 
 
-#@bot.message_handler(state=MyStates.how_much_hotels)
+# @bot.message_handler(state=MyStates.how_much_hotels)
 @bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
 def how_much_hotels(message):
     #    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
@@ -186,7 +192,8 @@ def how_much_hotels(message):
     pass
 
 
-@bot.message_handler(state=MyStates.print_results)
+# @bot.message_handler(state=MyStates.print_results)
+@bot.callback_query_handler(func=None, state=MyStates.print_results)
 def print_results(message):
     #     data = dict()
     #     data['city'] = "Boston"
