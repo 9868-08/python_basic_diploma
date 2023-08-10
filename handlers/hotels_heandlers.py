@@ -194,7 +194,7 @@ def how_much_hotels(message):
 
 # @bot.message_handler(state=MyStates.print_results)
 @bot.callback_query_handler(func=None, state=MyStates.print_results)
-def print_results(message):
+def print_results(call_button):
     #     data = dict()
     #     data['city'] = "Boston"
     #     data['how_much_hotels'] = 2
@@ -202,7 +202,7 @@ def print_results(message):
     #     data['how_much_photos'] = 2
     #
     print("runing print_results")
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
+    with bot.retrieve_data(call_button.from_user.id) as data:
         msg = ("Ready, take a look:\n<b>"
                f"City: {data['city']}\n"
                f"how_much_hotels: {data['how_much_hotels']}\n"
