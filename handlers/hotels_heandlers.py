@@ -167,34 +167,22 @@ def select_check_out(call_button):
     elif result:
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
-        # bot.send_message(call_button.from_user.id, 'Искать фотографии?')
+        bot.send_message(call_button.from_user.id, 'Введите количество отелей')
         # import telebot
-        from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
-        poll_markup = ReplyKeyboardMarkup(one_time_keyboard=True)
-        poll_markup.add(KeyboardButton('Искать фотографии?',  request_poll=KeyboardButtonPollType(type='quiz')))
-        # from my experience, only quiz type and regular type polls can be send.
-        remove_board = ReplyKeyboardRemove()
-        bot.set_state(call_button.from_user.id, MyStates.print_results)
+        # from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
+        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 
 
-# @bot.message_handler(state=MyStates.how_much_hotels)
-@bot.callback_query_handler(func=None, state=MyStates.how_much_hotels)
+@bot.message_handler(state=MyStates.how_much_hotels)
 def how_much_hotels(message):
-    #    with bot.retrieve_data(message.from_user.id) as data:  # Сохраняем выбранную дату выезда
-    #        data['need_photos'] = message.data
-    #    if data['need_photos'] != "N" or data['need_photos'] != "n" or data['need_photos'] != "now":
-    #        bot.set_state(message.from_user.id, MyStates.need_photos, message.print_results.id)
-    #    else:
-    #        bot.send_message(message.chat.id, 'how much photos?')
-    print("how_much_hotels")
-    bot.set_state(message.from_user.id, MyStates.print_results, message.chat.id)
-    print("runing how_much_hotels")
-    pass
+    with bot.retrieve_data(message.from_user.id) as data:
+        data['how_much_hotels'] = message.text
+    bot.set_state(message.from_user.id, MyStates.print_results)
 
 
-# @bot.message_handler(state=MyStates.print_results)
-@bot.callback_query_handler(func=None, state=MyStates.print_results)
-def print_results(call_button):
+# @bot.callback_query_handler(func=None, state=MyStates.print_results)
+@bot.message_handler(state=MyStates.print_results)
+def print_results(message: Message):
     #     data = dict()
     #     data['city'] = "Boston"
     #     data['how_much_hotels'] = 2
@@ -202,7 +190,7 @@ def print_results(call_button):
     #     data['how_much_photos'] = 2
     #
     print("runing print_results")
-    with bot.retrieve_data(call_button.from_user.id) as data:
+    with bot.retrieve_data(message.from_user.id) as data:
         msg = ("Ready, take a look:\n<b>"
                f"City: {data['city']}\n"
                f"how_much_hotels: {data['how_much_hotels']}\n"
