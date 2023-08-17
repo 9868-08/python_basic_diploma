@@ -22,7 +22,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
 
     # В зависимости от типа запроса вызываем соответствующую функцию
-    print(url)
     if method_type == 'GET':
         return get_request(
             url=url,
@@ -178,6 +177,7 @@ def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:
         data['how_much_hotels'] = message.text
     bot.set_state(message.from_user.id, MyStates.print_results)
+    bot.send_message(message.from_user.id, 'показать введенные данные?')
 
 
 # @bot.callback_query_handler(func=None, state=MyStates.print_results)
@@ -191,16 +191,11 @@ def print_results(message: Message):
     #
     print("runing print_results")
     with bot.retrieve_data(message.from_user.id) as data:
-        msg = ("Ready, take a look:\n<b>"
+        msg = ("Ready, take a look:\n"
                f"City: {data['city']}\n"
-               f"how_much_hotels: {data['how_much_hotels']}\n"
-               f"need photos: {data['need_photos']}\n"
-               f"how_much_photos: {message.text}</b>")
+               f"how_much_hotels: {data['how_much_hotels']}")
     bot.send_message(message.chat.id, msg, parse_mode="html")
     bot.delete_state(message.from_user.id, message.chat.id)
-
-    with bot.retrieve_data(message.from_user.id, message.chat.id) as data:
-        data['need_photos'] = message.text
 
     payload = {
         "currency": "USD",
