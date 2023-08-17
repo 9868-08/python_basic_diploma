@@ -28,7 +28,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
             params=params
         )
     else:
-        print('url=', url)
         return post_request(
             method_endswith,
             params
