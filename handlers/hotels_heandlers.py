@@ -182,12 +182,12 @@ def how_much_hotels(message):
 # @bot.callback_query_handler(func=None, state=MyStates.print_results)
 @bot.message_handler(state=MyStates.print_results)
 def print_results(message: Message):
-    #     data = dict()
-    #     data['city'] = "Boston"
-    #     data['how_much_hotels'] = 2
-    #     data['need_photos'] = "Y"
-    #     data['how_much_photos'] = 2
-    #
+    '''
+    текстом выводит полученные от пользователя данные
+    выводить описание и фотографии найденных отелей в количестве указанном пользователем
+    добавить: расстояние от центра
+            диапазон цен
+    '''
     print("runing print_results")
     with bot.retrieve_data(message.from_user.id) as data:
         msg = ("Ready, take a look:\n"
@@ -228,21 +228,22 @@ def print_results(message: Message):
     }
 
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')
-    parsed = hotel_id_json['data']['propertySearch']
-    hotel_id_list = []
+    parsed_dict = hotel_id_json['data']['propertySearch']
+    # hotel_id_list = []
     count = 1
-    for item in parsed['properties']:
-        # print (count, int(data['how_much_photos']))
+    for item in parsed_dict['properties']:
         if count > int(data['how_much_hotels']):
             break
         hotel_id = int(item['id'])
-        # payload = {"currency": "USD", "eapid": 1, "locale": "en_US", "siteId": 300000001, "propertyId": hotel_id}
-        hotel_id_list.append(hotel_id)
-        print(item['name'])
-        # pprint.pprint(item)
-        bot.send_message(message.chat.id, str(count) + ') отель ' + item['name'])
+
+        data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
+        data['address'] = api_request('properties/v2/detail', payload, 'POST')
+        data['price'] = item['price']['options'][0]['formattedDisplayPrice']
+        hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
+        bot.send_message(message.chat.id, str(count) + hotel_info)
         # bot.send_photo(str(item['propertyImage']['image']['url']))
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
-    return hotel_id_list
+    return
+    #  hotel_id_list
