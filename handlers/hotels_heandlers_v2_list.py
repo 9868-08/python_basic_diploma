@@ -237,8 +237,48 @@ def print_results(message: Message):
         hotel_id = int(item['id'])
 
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
-        payload = {}
-        data['address'] = api_request('properties/v2/detail', payload, 'POST')
+        payload = {
+    "currency": "USD",
+    "eapid": 1,
+    "locale": "en_US",
+    "siteId": 300000001,
+    "destination": {
+        "regionId": "3000448054"        # new York city_id = '3000448054'
+    },
+    "checkInDate": {
+        "day": 10,
+        "month": 10,
+        "year": 2023
+    },
+    "checkOutDate": {
+        "day": 15,
+        "month": 10,
+        "year": 2023
+    },
+    "rooms": [
+        {
+            "adults": 2,
+            "children": [
+                {
+                    "age": 5
+                },
+                {
+                    "age": 7
+                }
+            ]
+        }
+    ],
+    "resultsStartingIndex": 0,
+    "resultsSize": 200,
+    "sort": "PRICE_LOW_TO_HIGH",
+    "filters": {
+        "price": {
+            "max": 150,
+            "min": 100
+        }
+    }
+}
+        data['address'] = api_request('properties/v2/list', payload, 'POST')
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
         hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
         bot.send_message(message.chat.id, str(count) + hotel_info)
