@@ -95,7 +95,7 @@ def city_answer(message: Message):
     cities = city_search(message.text)  # Делаем запрос к API
     keyboard = city_markup(cities)  # Формируем клавиатуры
 
-    # TODO Отправляем пользователю
+    # Отправляем пользователю
     bot.send_message(chat_id=message.from_user.id,
                      text='Уточните, пожалуйста:',
                      reply_markup=keyboard
@@ -105,7 +105,7 @@ def city_answer(message: Message):
 
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
 def location_processing(call_button: CallbackQuery):
-    with bot.retrieve_data(call_button.from_user.id) as data:  # TODO Сохраняем выбранную локацию
+    with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
         data['city_id'] = call_button.data
 
     # формируем календарь
@@ -205,12 +205,12 @@ def print_results(message: Message):
         "checkInDate": {
             "day": 10,
             "month": 10,
-            "year": 2022
+            "year": 2023
         },
         "checkOutDate": {
             "day": 15,
             "month": 10,
-            "year": 2022
+            "year": 2023
         },
         "rooms": [
             {
@@ -237,6 +237,13 @@ def print_results(message: Message):
         hotel_id = int(item['id'])
 
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
+        payload = {
+                    "currency": "USD",
+                    "eapid": 1,
+                    "locale": "en_US",
+                    "siteId": 300000001,
+                    "propertyId": "9209612"
+                }   # деволтые значения с сайта
         data['address'] = api_request('properties/v2/detail', payload, 'POST')
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
         hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
