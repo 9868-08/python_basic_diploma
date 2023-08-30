@@ -6,7 +6,7 @@ from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
-from rapidapi.get_info import post_request
+from rapidapi.get_info import
 
 from loader import bot
 from config_data.config import RAPID_API_KEY

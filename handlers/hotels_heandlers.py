@@ -1,12 +1,12 @@
 from builtins import print
 from datetime import date
 
-from requests import get, codes
-from requests.exceptions import ConnectTimeout
+# from requests import get, codes
+# from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
-from rapidapi.get_info import post_request
+from rapidapi.get_info import api_request, get_request
 
 from loader import bot
 from config_data.config import RAPID_API_KEY
@@ -15,40 +15,6 @@ from states.bot_states import MyStates
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
 
-def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
-                params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
-                method_type  # Метод\тип запроса GET\POST
-                ):
-    url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
-
-    # В зависимости от типа запроса вызываем соответствующую функцию
-    if method_type == 'GET':
-        return get_request(
-            url=url,
-            params=params
-        )
-    else:
-        return post_request(
-            method_endswith,
-            params
-        )
-
-
-def get_request(url, params):
-    try:
-        response = get(
-            url,
-            headers={
-                "X-RapidAPI-Key": RAPID_API_KEY,
-                "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
-            },
-            params=params,
-            timeout=15
-        )
-        if response.status_code == codes.ok:
-            return response.json()
-    except ConnectTimeout as error:  # TODO Так как указали таймаут может быть прокинута ошибка - from requests.exceptions import ConnectTimeout
-        print(error)  # TODO Что-то делаем при возникновении ошибки
 
 
 def city_search(city_name):
