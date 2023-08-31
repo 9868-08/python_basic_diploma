@@ -37,6 +37,13 @@ payload = {
     }}
 }
 
-response = requests.request("POST", "https://hotels4.p.rapidapi.com/properties/v2/detail", json=payload,
+response = requests.request("POST", "https://hotels4.p.rapidapi.com/properties/v2/list", json=payload,
                             headers=headers)
-print(response, response.text)
+response_json = response.json()
+
+print(response_json)
+
+f = open("response.json", "a")
+f.write(str(response_json))
+f.close()
+
