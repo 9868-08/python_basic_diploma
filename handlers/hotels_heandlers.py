@@ -15,8 +15,6 @@ from states.bot_states import MyStates
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
 
-
-
 def city_search(city_name):
     query_string = {'q': city_name, 'locale': 'ru_RU'}
     response = api_request(method_endswith='locations/v3/search',
@@ -59,7 +57,7 @@ def city_answer(message: Message):
         data['city'] = message.text
 
     cities = city_search(message.text)  # Делаем запрос к API
-    keyboard = city_markup(cities)  # Формируем клавиатуры
+    keyboard = city_markup(cities)      # Формируем клавиатуры
 
     # Отправляем пользователю
     bot.send_message(chat_id=message.from_user.id,
@@ -204,15 +202,16 @@ def print_results(message: Message):
 
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
-                    "currency": "USD",
-                    "eapid": 1,
-                    "locale": "en_US",
-                    "siteId": 300000001,
-                    "propertyId": "9209612"
-                }   # деволтые значения с сайта
+            "currency": "USD",
+            "eapid": 1,
+            "locale": "en_US",
+            "siteId": 300000001,
+            "propertyId": "9209612"
+        }  # деволтые значения с сайта
         data['address'] = api_request('properties/v2/detail', payload, 'POST')
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
-        hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
+        hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(
+            item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
         bot.send_message(message.chat.id, str(count) + hotel_info)
         # bot.send_photo(str(item['propertyImage']['image']['url']))
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),

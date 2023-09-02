@@ -11,7 +11,7 @@ payload = {
     "eapid": 1,
     "locale": "en_US",
     "siteId": 300000001,
-    "destination": {"regionId": "6054439"},
+    "destination": {"regionId": "660"},
     "checkInDate": {
         "day": 10,
         "month": 10,
@@ -37,7 +37,7 @@ payload = {
     }}
 }
 
-response = requests.request("POST", "https://hotels4.p.rapidapi.com/properties/v2/list", json=payload,
+response = requests.request("POST", "https://hotels4.p.rapidapi.com/properties/v2/detail", json=payload,
                             headers=headers)
 response_json = response.json()
 
