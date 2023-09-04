@@ -11,31 +11,9 @@ payload = {
     "eapid": 1,
     "locale": "en_US",
     "siteId": 300000001,
-    "destination": {"regionId": "660"},
-    "checkInDate": {
-        "day": 10,
-        "month": 10,
-        "year": 2023
-    },
-    "checkOutDate": {
-        "day": 15,
-        "month": 10,
-        "year": 2023
-    },
-    "rooms": [
-        {
-            "adults": 2,
-            "children": [{"age": 5}, {"age": 7}]
-        }
-    ],
-    "resultsStartingIndex": 0,
-    "resultsSize": 200,
-    "sort": "PRICE_LOW_TO_HIGH",
-    "filters": {"price": {
-        "max": 150,
-        "min": 100
-    }}
-}
+    "propertyId": "9209612"
+}  # дефолтые значения с сайта
+
 
 response = requests.request("POST", "https://hotels4.p.rapidapi.com/properties/v2/detail", json=payload,
                             headers=headers)
