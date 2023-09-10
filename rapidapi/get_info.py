@@ -11,7 +11,7 @@ from config_data.config import RAPID_API_KEY
 
 
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
-                params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'ru_RU'}
+                params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'en_US'}
                 method_type  # Метод\тип запроса GET\POST
                 ):
     url = f"https://hotels4.p.rapidapi.com/{method_endswith}"
@@ -62,7 +62,7 @@ def post_request(method_endswith, payload):
 
 
 def city_search(city_name):
-    query_string = {'q': city_name, 'locale': 'ru_RU'}
+    query_string = {'q': city_name, 'locale': 'en_US'}
     response = api_request(method_endswith='locations/v3/search',
                            params=query_string,
                            method_type='GET')

@@ -16,7 +16,7 @@ ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы р
 
 
 def city_search(city_name):
-    query_string = {'q': city_name, 'locale': 'ru_RU'}
+    query_string = {'q': city_name, 'locale': 'en_US'}
     response = api_request(method_endswith='locations/v3/search',
                            params=query_string,
                            method_type='GET')
@@ -207,8 +207,9 @@ def print_results(message: Message):
             "locale": "en_US",
             "siteId": 300000001,
             "propertyId": "9209612"
-        }  # деволтые значения с сайта
-        data['address'] = api_request('properties/v2/detail', payload, 'POST')
+        }  # дефолтые значения с сайта
+        properties_v2_detail_responce = api_request('properties/v2/detail', payload, 'POST')
+        data['address'] = properties_v2_detail_responce
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
         hotel_info = '. отель: ' + str(item['name']) + 'адрес ' + str(
             item['name']) + '\n как далеко расположен от центра (мили) - ' + str(data['distanceFromDestination'])
