@@ -37,9 +37,13 @@ grandma.save()  # Update grandma's name in the database.
 # Now we have stored 3 people in the database. Let’s give them some pets. Grandma doesn’t like animals in the house, so she won’t have any, but Herb is an animal lover:
 bob_kitty = Pet.create(owner=uncle_bob, name='Kitty', animal_type='cat')
 Grandma_kitty = Pet.create(owner='Grandma', name='Kitty2', animal_type='cat')
-for attr in Pet:
-    if not attr.startswith('__'):
-        print(str(attr) + ' value= ' + Pet.name.name)
+query = (Pet
+         .select(Pet, Person)
+         .join(Person)
+         .where(Pet.animal_type == 'cat'))
+
+for pet in query:
+    print(pet.name, pet.owner.name)
 
 # print(Pet)
 # print(str(attr) + ' value= ' + getattr(classobject, attr))
