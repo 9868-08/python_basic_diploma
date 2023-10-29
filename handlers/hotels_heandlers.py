@@ -6,10 +6,10 @@ from datetime import date
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
-from rapidapi.get_info import api_request, get_request
+from rapidapi.get_info import api_request
 
 from loader import bot
-from config_data.config import RAPID_API_KEY
+# from config_data.config import RAPID_API_KEY
 from states.bot_states import MyStates
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
@@ -140,18 +140,19 @@ def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:
         data['how_much_hotels'] = message.text
     bot.set_state(message.from_user.id, MyStates.print_results)
-    bot.send_message(message.from_user.id, 'показать введенные данные?')
+    print_results(message)
+#    bot.send_message(message.from_user.id, 'показать введенные данные?')
 
 
 # @bot.callback_query_handler(func=None, state=MyStates.print_results)
 @bot.message_handler(state=MyStates.print_results)
 def print_results(message: Message):
-    '''
+    """
     текстом выводит полученные от пользователя данные
     выводить описание и фотографии найденных отелей в количестве указанном пользователем
     добавить: расстояние от центра
             диапазон цен
-    '''
+    """
     print("runing print_results")
     with bot.retrieve_data(message.from_user.id) as data:
         msg = ("Ready, take a look:\n"
@@ -198,7 +199,7 @@ def print_results(message: Message):
     for item in parsed_dict['properties']:
         if count > int(data['how_much_hotels']):
             break
-        hotel_id = int(item['id'])
+#        hotel_id = int(item['id'])
 
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
@@ -209,8 +210,9 @@ def print_results(message: Message):
             "propertyId": item['id']
         }  # дефолтые значения с сайта
         properties_v2_detail_responce = api_request('properties/v2/detail', payload, 'POST')
-        data['address'] = properties_v2_detail_responce['data']['propertyInfo']['summary']['location']['address']['addressLine']
-        data_price = item['price']['options'][0]['formattedDisplayPrice']
+        data['address'] = (
+            properties_v2_detail_responce)['data']['propertyInfo']['summary']['location']['address']['addressLine']
+#        data_price = item['price']['options'][0]['formattedDisplayPrice']
         #         data['price'] = data_price[1:]
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
         hotel_info = 'отель: ' + str(item['name']) + \
