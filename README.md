@@ -5,6 +5,14 @@ locations/v3/search - поиск локации по названию
 properties/v2/list - получение списка отелей по региону  
 properties/v2/detail - подробнее об отеле - адрес, фотки
 
+data['city']
+data['selected_command'] 
+data['check_in']
+data['check_out']
+data['how_much_hotels']
+data['distanceFromDestination']
+data['address']
+data['price']  
 
 
 src: https://github.com/9868-08
