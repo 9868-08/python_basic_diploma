@@ -6,15 +6,50 @@ from datetime import date
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
+<<<<<<< HEAD
 from rapidapi.get_info import api_request, get_request
+=======
+from rapidapi.get_info import api_request
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
 
 from loader import bot
-from config_data.config import RAPID_API_KEY
+# from config_data.config import RAPID_API_KEY
 from states.bot_states import MyStates
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
 
+<<<<<<< HEAD
+=======
+def city_search(city_name):
+    query_string = {'q': city_name, 'locale': 'en_US'}
+    response = api_request(method_endswith='locations/v3/search',
+                           params=query_string,
+                           method_type='GET')
+    if response:
+        cities = list()
+        for i in response['sr']:
+            if i['type'] == "CITY":
+                cities.append(
+                    dict(id=i['gaiaId'],
+                         region_name=i['regionNames']['fullName'])
+                )
+        return cities
+
+
+def city_markup(cities):
+    destinations = InlineKeyboardMarkup()
+    for city in cities:
+        destinations.add(
+            InlineKeyboardButton(text=city['region_name'],
+                                 callback_data=city['id']
+                                 )
+        )
+
+    return destinations
+
+
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
 def start_scenario(message: Message):
     bot.send_message(chat_id=message.from_user.id,
@@ -95,12 +130,16 @@ def select_check_out(call_button):
                               reply_markup=keyboard)
     elif result:
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
         bot.send_message(call_button.from_user.id, 'Введите количество отелей')
         # import telebot
         # from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+<<<<<<< HEAD
 =======
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
         with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную дату заезда
@@ -111,6 +150,8 @@ def select_check_out(call_button):
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 #        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
 >>>>>>> 350e3c5 (TypeError: select_check_out() missing 1 required positional argument: 'message')
+=======
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
 
 
 @bot.message_handler(state=MyStates.how_much_hotels)
@@ -118,7 +159,12 @@ def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:
         data['how_much_hotels'] = message.text
     bot.set_state(message.from_user.id, MyStates.print_results)
+<<<<<<< HEAD
     bot.send_message(message.from_user.id, 'показать введенные данные?')
+=======
+    print_results(message)
+#    bot.send_message(message.from_user.id, 'показать введенные данные?')
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
 
 
 # @bot.callback_query_handler(func=None, state=MyStates.print_results)
@@ -175,7 +221,11 @@ def print_results(message: Message):
     for item in parsed_dict['properties']:
         if count > int(data['how_much_hotels']):
             break
+<<<<<<< HEAD
         hotel_id = int(item['id'])
+=======
+#        hotel_id = int(item['id'])
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
 
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
@@ -186,8 +236,14 @@ def print_results(message: Message):
             "propertyId": item['id']
         }  # дефолтые значения с сайта
         properties_v2_detail_responce = api_request('properties/v2/detail', payload, 'POST')
+<<<<<<< HEAD
         data['address'] = properties_v2_detail_responce['data']['propertyInfo']['summary']['location']['address']['addressLine']
         data_price = item['price']['options'][0]['formattedDisplayPrice']
+=======
+        data['address'] = (
+            properties_v2_detail_responce)['data']['propertyInfo']['summary']['location']['address']['addressLine']
+#        data_price = item['price']['options'][0]['formattedDisplayPrice']
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
         #         data['price'] = data_price[1:]
         data['price'] = item['price']['options'][0]['formattedDisplayPrice']
         hotel_info = 'отель: ' + str(item['name']) + \
@@ -199,6 +255,7 @@ def print_results(message: Message):
                        caption='фото в отеле ' + item['name'])
         count += 1
     return
+<<<<<<< HEAD
 
 
 def city_search(city_name):
@@ -227,3 +284,6 @@ def city_markup(cities):
         )
 
     return destinations
+=======
+    #  hotel_id_list
+>>>>>>> 919f410a9b79b397ab3747aee3ad83c90822e043
