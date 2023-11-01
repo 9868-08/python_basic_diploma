@@ -2,7 +2,7 @@ from peewee import *
 from datetime import date
 import os
 
-myfilename = 'bot_history.db'
+myfilename = 'example.db'
 db = SqliteDatabase(myfilename)
 
 
@@ -74,5 +74,5 @@ for person in query:
 
 
 db.close()
-if os.path.isfile(myfilename):
-    os.remove(myfilename)
+# if os.path.isfile(myfilename):
+#    os.remove(myfilename)

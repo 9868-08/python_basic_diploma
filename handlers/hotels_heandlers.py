@@ -235,9 +235,4 @@ def print_results(message: Message):
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
-    bot.set_state(message.from_user.id, MyStates.city)
-    bot.send_message(message.chat.id, data['selected_command'] + ' was selected')
-
-    with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
-        history_put(message.from_user.id, data['selected_command'])
-    return
+    return hotel_id_json

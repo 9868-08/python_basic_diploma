@@ -31,13 +31,7 @@ def history_put(user_id, command):
     print("selected history_put with params:", user_id, command)
     db.connect()
     db.create_tables([Person, Command])
-
-    user1 = Person.create(user_id=123456)
-
-    user1_command1 = Command.create(user_id=123456, datetime=datetime.now(), selected_command="/highprice")
-    user1_command2 = Command.create(user_id=123456, datetime=datetime.now(), selected_command="/lowhprice")
-    user2_command1 = Command.create(user_id=123456, datetime=datetime.now(), selected_command="/lowhprice")
-    user2_command2 = Command.create(user_id=123456, datetime=datetime.now(), selected_command="/bestdeal")
+    user1 = Person.create(user_id=user_id, datetime=datetime.now(), selected_command=command)
     db.close()
     return ()
 
