@@ -53,6 +53,7 @@ def start_history_scenario(message: Message):
 def start_scenario(message: Message):
     message_dict = json.loads(jsonpickle.encode(message))
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
+        data = dict()
         data['city'] = message.text
         data['selected_command'] = message_dict['text']
     bot.send_message(message.chat.id, data['selected_command'] + ' was selected')
