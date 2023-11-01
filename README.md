@@ -5,6 +5,7 @@ locations/v3/search - поиск локации по названию
 properties/v2/list - получение списка отелей по региону  
 properties/v2/detail - подробнее об отеле - адрес, фотки
 
+Хранимые между функциями данные:
 data['city']
 data['selected_command'] 
 data['check_in']

@@ -1,15 +1,13 @@
 from builtins import print
 from datetime import date
-
-# from requests import get, codes
-# from requests.exceptions import ConnectTimeout
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
-
 from rapidapi.get_info import api_request
 from loader import bot
-# from config_data.config import RAPID_API_KEY
 from states.bot_states import MyStates
+import jsonpickle
+import json
+from database.bot_database import Person, Command, history_put, history_list
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
@@ -42,8 +40,23 @@ def city_markup(cities):
     return destinations
 
 
+@bot.message_handler(commands=['history'])
+def start_history_scenario(message: Message):
+    message_dict = json.loads(jsonpickle.encode(message))
+    data = dict()
+    data['selected_command'] = message_dict['text']
+    bot.send_message(message.chat.id, data['selected_command'] + ' was selected. \n')
+    history_list(user_id=message.from_user.id)
+
+
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
 def start_scenario(message: Message):
+    message_dict = json.loads(jsonpickle.encode(message))
+    with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
+        data['city'] = message.text
+        data['selected_command'] = message_dict['text']
+    bot.send_message(message.chat.id, data['selected_command'] + ' was selected')
+
     bot.send_message(chat_id=message.from_user.id,
                      text='Введи город поиска'
                      )
@@ -220,4 +233,6 @@ def print_results(message: Message):
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
+    with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
+        history_put(message.from_user.id, data['selected_command'])
     return
