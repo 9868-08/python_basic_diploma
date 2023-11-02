@@ -176,7 +176,7 @@ def print_results(message: Message):
                f"City: {data['city']}\n"
                f"how_much_hotels: {data['how_much_hotels']}")
     bot.send_message(message.chat.id, msg, parse_mode="html")
-    bot.delete_state(message.from_user.id, message.chat.id)
+#    bot.delete_state(message.from_user.id, message.chat.id)
 
     payload = {
         "currency": "USD",
@@ -211,6 +211,7 @@ def print_results(message: Message):
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')
     parsed_dict = hotel_id_json['data']['propertySearch']
     # hotel_id_list = []
+    founded_hotel = []
     count = 1
     for item in parsed_dict['properties']:
         if count > int(data['how_much_hotels']):
@@ -235,4 +236,7 @@ def print_results(message: Message):
         bot.send_photo(message.chat.id, str(item['propertyImage']['image']['url']),
                        caption='фото в отеле ' + item['name'])
         count += 1
+        founded_hotel.append(str(item['name']))
+    history_put(message.from_user.id, command=data['selected_command'], result=founded_hotel)
+    bot.delete_state(message.from_user.id, message.chat.id)
     return hotel_id_json
