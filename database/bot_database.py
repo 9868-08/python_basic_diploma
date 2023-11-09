@@ -16,7 +16,7 @@ class Person(Model):
 
 class Command(Model):
     owner = ForeignKeyField(Person, backref='commands')
-    date_time = datetime
+    my_datetime = DateTimeField()
     selected_command = CharField()
     result = list()
 
@@ -29,12 +29,11 @@ db.create_tables([Person, Command])
 
 def history_put(user_id, command, result):
     print("selected history_put with params:", user_id, command)
-    db.connect()
+    db.connect(reuse_if_open=True)
     db.create_tables([Person, Command])
     print('user1',  user_id, 'datetime=', datetime.now(), 'selected_command=', command, result)
-    user1 = Person.create(user_id=user_id, datetime=datetime.now(), selected_command=command)
-#   Grandma_kitty = Pet.create(owner='Grandma', name='Kitty2', animal_type='cat')
-    command1 = Command.create(owner=user_id, datetime=datetime.now(), command=command, result=result)
+    user1 = Person.create(user_id=user_id, my_datetime=datetime.now(), selected_command=command)
+    command1 = Command.create(owner=user_id, datetime=datetime.now(), selected_command=command, result=result)
     db.close()
     return ()
 
@@ -44,7 +43,7 @@ def history_list(user_id):
     # query = Person.select().order_by(Person.name).prefetch(Command)
     query = Command.select()
     for i in query:
-        print('date_time=', i.date_time, 'owner.name', i.owner.name, end='       ')
+        print('date_time=', str(i.my_date_time), 'owner.name', i, end='       ')
         print('selected_command', i.selected_command)
     db.close()
 
