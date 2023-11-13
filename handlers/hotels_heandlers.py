@@ -7,7 +7,7 @@ from loader import bot
 from states.bot_states import MyStates
 import jsonpickle
 import json
-from database.bot_database import Person, Command, history_put, history_list
+from database.bot_database import User, Command, history_put, history_list
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
@@ -46,7 +46,13 @@ def start_history_scenario(message: Message):
     data = dict()
     data['selected_command'] = message_dict['text']
     bot.send_message(message.chat.id, data['selected_command'] + ' was selected. \n')
-    history_list(user_id=message.from_user.id)
+    history = history_list(user_id=message.from_user.id)
+    for i in history:
+        result = ''
+        for j in i:
+            print(j, end=' ')
+            result = result + j
+        bot.send_message(message.chat.id, 'history item: ' + str(result) + '\n')
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
@@ -236,6 +242,6 @@ def print_results(message: Message):
                        caption='фото в отеле ' + item['name'])
         count += 1
         founded_hotel.append(str(item['name']))
-    history_put(message.from_user.id, command=data['selected_command'], result=founded_hotel)
+    history_put(message.from_user.id, message.from_user.full_name, command=data['selected_command'], result=founded_hotel)
     bot.delete_state(message.from_user.id, message.chat.id)
     return hotel_id_json
