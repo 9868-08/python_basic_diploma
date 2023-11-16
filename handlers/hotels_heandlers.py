@@ -51,7 +51,7 @@ def start_history_scenario(message: Message):
         result = ''
         for j in i:
             print(j, end=' ')
-            result = result + j
+            result = result + str(j) + "  "
         bot.send_message(message.chat.id, 'history item: ' + str(result) + '\n')
 
 

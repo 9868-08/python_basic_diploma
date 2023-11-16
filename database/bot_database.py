@@ -1,3 +1,4 @@
+from playhouse.sqlite_ext import JSONField
 from datetime import datetime
 from peewee import *
 
@@ -23,7 +24,7 @@ class Command(BaseModel):
     #    my_datetime = DateTimeField()
     my_datetime = DateField(default=datetime.now().strftime("%d.%m.%Y"))
     selected_command = CharField()
-    result = list()
+    result = JSONField()
 
 
 db.create_tables([User, Command])
@@ -50,7 +51,7 @@ def history_list(user_id):
     query = Command.select()
     for i in query:
         result_inside = (str(i.my_datetime), i.owner_id, i.selected_command)
-        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id, 'selected_command', i.selected_command)
+        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id, 'selected_command', 'owner_id', i, 'selected_command', i.selected_command)
         result.append(result_inside)
     db.close()
     return result
