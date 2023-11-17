@@ -1,3 +1,8 @@
+.pyre/
+.idea/*
+.env
+/logs/logs.log
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -125,7 +130,3 @@ venv.bak/
 .dmypy.json
 dmypy.json
 
-# Pyre type checker
-.pyre/
-.idea/*
-.env
