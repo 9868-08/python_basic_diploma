@@ -7,7 +7,7 @@ from loader import bot
 from states.bot_states import MyStates
 import jsonpickle
 import json
-from database.bot_database import User, Command, history_put, history_list
+from database.bot_database import (history_put, history_list)
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
@@ -182,7 +182,12 @@ def print_results(message: Message):
                f"how_much_hotels: {data['how_much_hotels']}")
     bot.send_message(message.chat.id, msg, parse_mode="html")
 #    bot.delete_state(message.from_user.id, message.chat.id)
-
+    if data['selected_command'] == '/lowprice':
+        bot_sort = 'PRICE_LOW_TO_HIGH'
+    elif data['selected_command'] == '/highprice':
+        bot_sort = 'PRICE_HIGH_TO_LOW'
+    else:
+        bot_sort = 'PRICE_LOW_TO_HIGH'
     payload = {
         "currency": "USD",
         "eapid": 1,
@@ -207,7 +212,7 @@ def print_results(message: Message):
         ],
         "resultsStartingIndex": 0,
         "resultsSize": 200,
-        "sort": "PRICE_LOW_TO_HIGH",
+        "sort": bot_sort,
         "filters": {"price": {
             "max": 150,
             "min": 100
@@ -242,6 +247,7 @@ def print_results(message: Message):
                        caption='фото в отеле ' + item['name'])
         count += 1
         founded_hotel.append(str(item['name']))
-    history_put(message.from_user.id, message.from_user.full_name, command=data['selected_command'], result=founded_hotel)
+    history_put(message.from_user.id, message.from_user.full_name, command=data['selected_command'],
+                result=founded_hotel)
     bot.delete_state(message.from_user.id, message.chat.id)
     return hotel_id_json
