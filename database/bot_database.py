@@ -15,7 +15,7 @@ class BaseModel(Model):
 
 class User(BaseModel):
     # Для каждого поля используется класс из peewee, а не стандартный тип python
-    name = CharField()
+    name = CharField(unique=True)
     telegram_id = IntegerField()
 
 
@@ -27,23 +27,20 @@ class Command(BaseModel):
     result = JSONField()
 
 
-db.create_tables([User, Command])
-
-
 def history_put(user_id, full_name, command, result):
     print("selected history_put with params:", user_id, command)
     db.connect(reuse_if_open=True)
-    db.create_tables([User, Command])
     print('user1', user_id, 'name=', full_name, 'selected_command=', command, result)
     user1 = User.create(
-            name=full_name,
-            telegram_id=user_id
+        name=full_name,
+        telegram_id=user_id
     )
     command1 = Command.create(
-            owner=user_id,
-            my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
-            selected_command=command,
-            result=result)
+        owner=User.user_id,
+        my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
+        selected_command=command,
+        result=result)
+    print(user1, command1)  # Local variable 'user1', 'command1' value is not used
     db.close()
     return ()
 
@@ -55,7 +52,8 @@ def history_list(user_id):
     query = Command.select()
     for i in query:
         result_tmp = (str(i.my_datetime), i.owner_id, i.selected_command)
-        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id, 'selected_command', 'owner_id', i, 'selected_command', i.selected_command)
+        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id,
+              'selected_command', 'owner_id', i, 'selected_command', i.selected_command)
         result.append(result_tmp)
     db.close()
     return result
