@@ -52,7 +52,7 @@ def start_history_scenario(message: Message):
         for j in i:
             print(j, end=' ')
             result = result + str(j) + "  "
-        bot.send_message(message.chat.id, 'history item: ' + str(result) + '\n')
+        bot.send_message(message.chat.id, str(result) + '\n')
 
 
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])

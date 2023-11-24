@@ -46,9 +46,10 @@ def history_list(user_id):
     result = list()
     query = Command.select()
     for i in query:
-        result_tmp = (str(i.my_datetime), i.owner_id, i.selected_command)
-        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id,
-              'selected_command', 'owner_id', i, 'selected_command', i.selected_command)
+        result_tmp = (str(i.my_datetime), i.owner.name, i.owner.telegram_id, i.selected_command, i.result)
+        print('date_time=', str(i.my_datetime), 'owner_id', i.owner_id, 'selected_command', 'owner_id', i,
+              'selected_command', i.selected_command, 'searching_result=', i.result, 'name=', i.owner.name,
+              'relegram_id=', i.owner.telegram_id)
         result.append(result_tmp)
     db.close()
     return result
