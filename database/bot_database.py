@@ -28,6 +28,8 @@ class Command(BaseModel):
 
 
 def history_put(user_id, full_name, command, result):
+    # проверка наличия пользователя в базе:
+    query = Command.select()
     user1 = User.create(
         name=full_name,
         telegram_id=user_id
