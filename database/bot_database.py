@@ -29,6 +29,20 @@ class Command(BaseModel):
 
 def history_put(user_id, full_name, command, result):
     # проверка наличия пользователя в базе:
+    result = (
+        Command  # Откуда
+        .select()  # Какие поля, если не указывать выбираются все
+        .where(Command.owner == 1)  # С каким условием
+    )
+
+    for i in result:
+        print(f'{i.owner=}\n'
+              f'{i.owner.name=}\n'
+              f'{i.owner.telegram_id=}\n'
+              f'{i.my_datetime=}\n'
+              f'{i.selected_command=}\n'
+              f'{i.result=}')
+
     query = Command.select()
     user1 = User.create(
         name=full_name,
