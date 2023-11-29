@@ -29,30 +29,36 @@ class Command(BaseModel):
 
 def history_put(user_id, full_name, command, result):
     # проверка наличия пользователя в базе:
-    result = (
-        Command  # Откуда
+    sql_result = (
+        User  # Откуда
         .select()  # Какие поля, если не указывать выбираются все
-        .where(Command.owner == 1)  # С каким условием
+        .where(User.telegram_id == user_id)  # С каким условием
+        #        .where(Command.owner == 2)  # С каким условием
     )
-
-    for i in result:
+    for i in sql_result:
         print(f'{i.owner=}\n'
               f'{i.owner.name=}\n'
               f'{i.owner.telegram_id=}\n'
               f'{i.my_datetime=}\n'
               f'{i.selected_command=}\n'
               f'{i.result=}')
-
-    query = Command.select()
-    user1 = User.create(
-        name=full_name,
-        telegram_id=user_id
-    )
-    Command.create(
-        owner=user1.id,  # id объекта созданного строчкой выше
-        my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
-        selected_command=command,
-        result=result)
+        if i.owner.telegram_id == user_id:
+            print('user', i.owner.name, 'exist')
+            Command.create(
+                owner=i.owner,  # id объекта из базы
+                my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
+                selected_command=command,
+                result=result)
+        else:
+            user1 = User.create(
+                name=full_name,
+                telegram_id=user_id
+            )
+            Command.create(
+                owner=user1.id,  # id объекта созданного строчкой выше
+                my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
+                selected_command=command,
+                result=result)
     return ()
 
 
