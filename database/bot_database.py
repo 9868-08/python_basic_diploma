@@ -27,44 +27,41 @@ class Command(BaseModel):
     result = JSONField()
 
 
-def history_put(user_id, full_name, command, result):
-    # проверка наличия пользователя в базе:
-    sql_result = (
-        User  # Откуда
-        .select()  # Какие поля, если не указывать выбираются все
-        .where(User.telegram_id == user_id)  # С каким условием
-        #        .where(Command.owner == 2)  # С каким условием
-    )
-    for i in sql_result:
-        print(f'{i.owner=}\n'
-              f'{i.owner.name=}\n'
-              f'{i.owner.telegram_id=}\n'
-              f'{i.my_datetime=}\n'
-              f'{i.selected_command=}\n'
-              f'{i.result=}')
-        if i.owner.telegram_id == user_id:
-            print('user', i.owner.name, 'exist')
-            Command.create(
-                owner=i.owner,  # id объекта из базы
-                my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
-                selected_command=command,
-                result=result)
-        else:
-            user1 = User.create(
-                name=full_name,
-                telegram_id=user_id
-            )
-            Command.create(
-                owner=user1.id,  # id объекта созданного строчкой выше
-                my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
-                selected_command=command,
-                result=result)
+def check_user_in_db(telegram_id):
+    print("selected check_user_in_db", telegram_id)
+    while True:
+        result = list()
+        query = Command.select()
+        for i in query:
+            result_tmp = (str(i.my_datetime), i.owner.name, i.owner.telegram_id, i.selected_command, i.result)
+            print('date_time=', str(i.my_datetime), 'name=', i.owner.name, 'relegram_id=', i.owner.telegram_id,
+                  'owner_id', i.owner_id, 'selected_command', 'owner_id', i,
+                  'selected_command', i.selected_command, 'searching_result=', i.result)
+            result.append(result_tmp)
+            if i.owner.telegram_id == telegram_id:
+                return i.owner.id
+        db.close()
+        return None
+
+
+def history_put(telegram_id, full_name, command, result):
+    user_id = check_user_in_db(telegram_id)
+    if user_id is None:
+        user1 = User.create(
+            name=full_name,
+            telegram_id=telegram_id
+        )
+        user_id = user1.id
+    Command.create(
+        owner=user_id,
+        my_datetime=datetime.now().strftime("%y.%m.%d %H:%M"),
+        selected_command=command,
+        result=result)
     return ()
 
 
 def history_list(user_id):
     print("selected history_list with params:", user_id)
-    # query = User.select().order_by(User.name).prefetch(Command)
     result = list()
     query = Command.select()
     for i in query:
