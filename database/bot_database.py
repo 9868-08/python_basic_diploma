@@ -29,19 +29,16 @@ class Command(BaseModel):
 
 def check_user_in_db(telegram_id):
     print("selected check_user_in_db", telegram_id)
-    while True:
-        result = list()
-        query = Command.select()
-        for i in query:
-            result_tmp = (str(i.my_datetime), i.owner.name, i.owner.telegram_id, i.selected_command, i.result)
-            print('date_time=', str(i.my_datetime), 'name=', i.owner.name, 'relegram_id=', i.owner.telegram_id,
-                  'owner_id', i.owner_id, 'selected_command', 'owner_id', i,
-                  'selected_command', i.selected_command, 'searching_result=', i.result)
-            result.append(result_tmp)
-            if i.owner.telegram_id == telegram_id:
-                return i.owner.id
-        db.close()
-        return None
+    result = (
+        Command
+        .select()
+        .join(User)
+        .where(User.telegram_id == telegram_id)
+    ).get()
+    db.close()
+    if result:
+        return result.id
+    return None
 
 
 def history_put(telegram_id, full_name, command, result):
