@@ -15,8 +15,8 @@ class BaseModel(Model):
 
 class User(BaseModel):
     # Для каждого поля используется класс из peewee, а не стандартный тип python
-    name = CharField(unique=True)
-    telegram_id = IntegerField()
+    name = CharField()
+    telegram_id = IntegerField(unique=True)
 
 
 class Command(BaseModel):
