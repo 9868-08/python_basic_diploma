@@ -57,16 +57,22 @@ def history_put(telegram_id, full_name, command, result):
     return ()
 
 
-def history_list(user_id):
-    print("selected history_list with params:", user_id)
-    result = list()
+def history_list(user_telegram_id):
+    print("selected history_list with params:", user_telegram_id)
+    user_id = check_user_in_db(user_telegram_id)
+    result_lst = list()
     query = Command.select()
+    result = (
+        Command
+        .select()
+        .join(User)
+        .where(User.telegram_id == user_telegram_id)
+    ).get()
     for i in query:
-        if i.owner.telegram_id == user_id:
-            result_tmp = (i.selected_command, str(i.my_datetime), i.result)
-            result.append(result_tmp)
+        result_tmp = (i.selected_command, str(i.my_datetime), i.result)
+        result_lst.append(result_tmp)
     db.close()
-    return result
+    return result_lst
 
 # if os.path.isfile(db_filename):
 #    os.remove(db_filename)

@@ -47,7 +47,7 @@ def start_history_scenario(message: Message):
     data = dict()
     data['selected_command'] = message_dict['text']
     bot.send_message(message.chat.id, data['selected_command'] + ' was selected. \n')
-    history = history_list(user_id=message.from_user.id)
+    history = history_list(user_telegram_id=message.from_user.id)
     for i in history:
         result = ''
         for j in i:
