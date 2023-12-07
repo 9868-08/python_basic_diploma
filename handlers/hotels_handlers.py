@@ -265,10 +265,10 @@ def bestdeal_distance_min(message: Message):
     bot.send_message(chat_id=message.from_user.id,
                      text='минимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_min)
+    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_min_flag)
 
 
-@bot.callback_query_handler(func=None, state=MyStates.bestdeal_distance_min)
+@bot.callback_query_handler(func=None, state=MyStates.bestdeal_distance_min_flag)
 def bestdeal_distance_max(message: Message):
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['bestdeal_min'] = message.text
