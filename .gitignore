@@ -1,3 +1,5 @@
+database/bot_history.db
+
 .pyre/
 .idea/*
 .env
