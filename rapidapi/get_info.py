@@ -1,10 +1,9 @@
 from json import JSONDecodeError
 import requests
 import json
-from requests import Response, ConnectTimeout
+import requests
 from loader import bot
 from states import bot_states
-from requests import get, codes
 import ast
 import os
 from config_data.config import RAPID_API_KEY
@@ -31,7 +30,7 @@ def api_request(method_endswith,  # Меняется в зависимости �
 
 def get_request(url, params):
     try:
-        response = get(
+        response = requests.get(
             url,
             headers={
                 "X-RapidAPI-Key": RAPID_API_KEY,
@@ -40,9 +39,10 @@ def get_request(url, params):
             params=params,
             timeout=15
         )
-        if response.status_code == codes.ok:
+        print("Status Code", response.status_code)
+        if response.status_code == 200:
             return response.json()
-    except ConnectTimeout as error:  # Так как указали таймаут может быть прокинута ошибка - from requests.exceptions import ConnectTimeout
+    except ConnectionError as error:  # Так как указали таймаут может быть прокинута ошибка - from requests.exceptions import ConnectTimeout
         print(error)  # Что-то делаем при возникновении ошибки
 
 
@@ -56,7 +56,7 @@ def post_request(method_endswith, payload):
 
     response = requests.request("POST", "https://hotels4.p.rapidapi.com/"+method_endswith, json=payload, headers=headers)
     #    print(response.text)
-    if response.status_code == codes.ok:
+    if response.status_code == 200:
         return response.json()
     return response.json()
 

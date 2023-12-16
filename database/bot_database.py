@@ -34,7 +34,7 @@ def check_user_in_db(telegram_id):
         .select()
         .join(User)
         .where(User.telegram_id == telegram_id)
-    ).get()
+    ).get_or_none()
     db.close()
     if result:
         return result.id

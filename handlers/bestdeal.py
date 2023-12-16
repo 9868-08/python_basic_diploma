@@ -1,6 +1,7 @@
 from loader import bot
-from states.bot_states import MyStates
+from states import bot_states
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+import rapidapi
 
 
 @bot.message_handler(commands=['bestdeal'])
@@ -11,20 +12,20 @@ def bestdeal_distance_min(message: Message):
     bot.send_message(chat_id=message.from_user.id,
                      text='минимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_min_flag)
+    bot.set_state(message.from_user.id, bot_states.MyStates.bestdeal_distance_min_flag)
 
 
-@bot.callback_query_handler(func=None, state=MyStates.bestdeal_distance_min_flag)
+@bot.callback_query_handler(func=None, state=bot_states.MyStates.bestdeal_distance_min_flag)
 def bestdeal_distance_max(message: Message):
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['bestdeal_min'] = message.text
     bot.send_message(chat_id=message.from_user.id,
                      text='максимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, MyStates.city)
+    bot.set_state(message.from_user.id, city)
 
 
-@bot.message_handler(state=MyStates.print_results)
+@bot.message_handler(state=bot_states.MyStates.print_results)
 def bestdeal_print_results(message: Message):
     """
     текстом выводит полученные от пользователя данные

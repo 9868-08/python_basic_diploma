@@ -2,9 +2,7 @@
 from loader import bot
 # from utils.set_bot_commands import set_default_commands
 from telebot import custom_filters
-# import handlers
-# from handlers import bestdeal
-from handlers import hotels_handlers
+import handlers
 # from loguru import logger
 # import logging
 # import mk_telegram_inline_keyboard
