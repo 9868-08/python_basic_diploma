@@ -15,6 +15,8 @@ class MyStates(StatesGroup):
     check_out = State()
     city_detail = State()
     location_confirmation = State()
+    bestdeal = State()
     bestdeal_distance_min_flag = State()
+    bestdeal_distance_max_flag = State()
 
 

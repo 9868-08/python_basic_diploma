@@ -3,7 +3,6 @@ from datetime import date
 from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
-import handlers.bestdeal
 from rapidapi.get_info import api_request
 from loader import bot
 from states.bot_states import MyStates
@@ -62,8 +61,7 @@ def start_history_scenario(message: Message):
 def start_scenario(message: Message):
     message_dict = json.loads(jsonpickle.encode(message))
     bot.set_state(message.from_user.id, MyStates.city)
-    with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
-        data['city'] = message.text
+    with bot.retrieve_data(message.from_user.id) as data:
         data['selected_command'] = message_dict['text']
     bot.send_message(message.chat.id, data['selected_command'] + ' was selected')
     bot.send_message(chat_id=message.from_user.id,
