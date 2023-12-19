@@ -9,6 +9,7 @@ from states.bot_states import MyStates
 import jsonpickle
 import json
 from database.bot_database import (history_put, history_list)
+import handlers
 
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
@@ -190,7 +191,7 @@ def print_results(message: Message):
     elif data['selected_command'] == '/bestdeal':
         handlers.bestdeal.bestdeal_distance_min(message)
         handlers.bestdeal.bestdeal_distance_max(message)
-        hotel_id_json = handlers.bestdeal_print_results(message)
+        hotel_id_json = handlers.bestdeal.bestdeal_print_results(message)
         return hotel_id_json
     payload = {
         "currency": "USD",

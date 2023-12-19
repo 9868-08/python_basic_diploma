@@ -24,7 +24,7 @@ def bestdeal_distance_max(message: Message):
     bot.set_state(message.from_user.id, bot_states.MyStates.bestdeal_distance_max_flag)
 
 
-@bot.message_handler(state=bot_states.MyStates.bestdeal_distance_max_flag)
+#@bot.message_handler(state=bot_states.MyStates.bestdeal_distance_max_flag)
 def bestdeal_print_results(message: Message):
     """
     текстом выводит полученные от пользователя данные
