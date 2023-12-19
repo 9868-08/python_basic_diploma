@@ -189,10 +189,8 @@ def print_results(message: Message):
     elif data['selected_command'] == '/highprice':
         bot_sort = 'PRICE_HIGH_TO_LOW'
     elif data['selected_command'] == '/bestdeal':
-        handlers.bestdeal.bestdeal_distance_min(message)
-        handlers.bestdeal.bestdeal_distance_max(message)
-        hotel_id_json = handlers.bestdeal.bestdeal_print_results(message)
-        return hotel_id_json
+        bot.set_state(message.from_user.id, MyStates.bestdeal)
+        return
     payload = {
         "currency": "USD",
         "eapid": 1,

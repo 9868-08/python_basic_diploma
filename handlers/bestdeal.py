@@ -1,30 +1,30 @@
 from loader import bot
-from states import bot_states
+from states.bot_states import MyStates
 from telebot.types import Message
 from rapidapi.get_info import api_request
 from database.bot_database import (history_put)
 
 
-@bot.message_handler(state=bot_states.MyStates.bestdeal)
+@bot.message_handler(state=MyStates.bestdeal)
 def bestdeal_distance_min(message: Message):
     print("bestdeal running")
     bot.send_message(chat_id=message.from_user.id,
                      text='минимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, bot_states.MyStates.bestdeal_distance_min_flag)
+    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_min_flag)
 
 
-@bot.message_handler(state=bot_states.MyStates.bestdeal_distance_min_flag)
+@bot.message_handler(state=MyStates.bestdeal_distance_min_flag)
 def bestdeal_distance_max(message: Message):
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['bestdeal_min'] = message.text
     bot.send_message(chat_id=message.from_user.id,
                      text='максимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, bot_states.MyStates.bestdeal_distance_max_flag)
+    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_max_flag)
 
 
-#@bot.message_handler(state=bot_states.MyStates.bestdeal_distance_max_flag)
+#@bot.message_handler(state=MyStates.bestdeal_distance_max_flag)
 def bestdeal_print_results(message: Message):
     """
     текстом выводит полученные от пользователя данные
