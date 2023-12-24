@@ -5,26 +5,30 @@ from rapidapi.get_info import api_request
 from database.bot_database import (history_put)
 
 
-@bot.message_handler(state=MyStates.bestdeal)
+@bot.message_handler(state=MyStates.bestdeal_distance_min_flag)
 def bestdeal_distance_min(message: Message):
-    print("bestdeal running")
+    print("bestdeal_distance_min running")
+    with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
+        data['how_much_hotels'] = message.text
     bot.send_message(chat_id=message.from_user.id,
                      text='минимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_min_flag)
+    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_max_flag)
 
 
-@bot.message_handler(state=MyStates.bestdeal_distance_min_flag)
+@bot.message_handler(state=MyStates.bestdeal_distance_max_flag)
 def bestdeal_distance_max(message: Message):
+    print("bestdeal_distance_max running")
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['bestdeal_min'] = message.text
     bot.send_message(chat_id=message.from_user.id,
                      text='максимальное расстояние от центра, где будем искать'
                      )
-    bot.set_state(message.from_user.id, MyStates.bestdeal_distance_max_flag)
+    bot.set_state(message.from_user.id, MyStates.bestdeal_print_results)
+    return
 
 
-#@bot.message_handler(state=MyStates.bestdeal_distance_max_flag)
+@bot.message_handler(state=MyStates.bestdeal_print_results)
 def bestdeal_print_results(message: Message):
     """
     текстом выводит полученные от пользователя данные
@@ -33,19 +37,17 @@ def bestdeal_print_results(message: Message):
             диапазон цен
     """
     print("runing bestdeal print_results")
+    bot.delete_state(message.from_user.id, message.chat.id)
     with bot.retrieve_data(message.from_user.id) as data:
+        data['bestdeal_max'] = message.text
         msg = ("Ready, take a look:\n"
                f"Command: {data['selected_command']}\n"               
                f"City: {data['city']}\n"
-               f"how_much_hotels: {data['how_much_hotels']}")
+               f"how_much_hotels: {data['how_much_hotels']}\n"
+               f"bestdeal_distance_min: {data['bestdeal_min']}\n"
+               f"bestdeal_distance_max: {data['bestdeal_max']}\n"
+               )
     bot.send_message(message.chat.id, msg, parse_mode="html")
-#    bot.delete_state(message.from_user.id, message.chat.id)
-    if data['selected_command'] == '/lowprice':
-        bot_sort = 'PRICE_LOW_TO_HIGH'
-    elif data['selected_command'] == '/highprice':
-        bot_sort = 'PRICE_HIGH_TO_LOW'
-    else:
-        bot_sort = 'PRICE_LOW_TO_HIGH'
     payload = {
         "currency": "USD",
         "eapid": 1,
@@ -70,10 +72,11 @@ def bestdeal_print_results(message: Message):
         ],
         "resultsStartingIndex": 0,
         "resultsSize": 200,
-        "sort": bot_sort,
-        "filters": {"price": {
-            "max": 150,
-            "min": 100
+        "sort": 'PRICE_LOW_TO_HIGH',
+        "filters": {"DISTANCE": {
+            "max": data['bestdeal_min'],
+            "min": data['bestdeal_max']
+
         }}
     }
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')

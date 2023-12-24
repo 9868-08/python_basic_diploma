@@ -9,7 +9,7 @@ from states.bot_states import MyStates
 import jsonpickle
 import json
 from database.bot_database import (history_put, history_list)
-import handlers
+# import handlers
 
 
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
@@ -145,17 +145,11 @@ def select_check_out(call_button):
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
         bot.send_message(call_button.from_user.id, 'Введите количество отелей')
-        # import telebot
-        # from telebot.types import ReplyKeyboardMarkup, KeyboardButton, KeyboardButtonPollType, ReplyKeyboardRemove
+    if data['selected_command'] != "/bestdeal":
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-        # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
-        with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную дату заезда
-            data['check_in'] = call_button.data
-        # формируем календарь
-#        calendar, step = create_calendar(call_button)
-        # отправляем календарь пользователю
-        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-#        bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
+    else:
+        bot.set_state(call_button.from_user.id, MyStates.bestdeal_distance_min_flag)
+    return
 
 
 @bot.message_handler(state=MyStates.how_much_hotels)
@@ -163,7 +157,8 @@ def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:
         data['how_much_hotels'] = message.text
     bot.set_state(message.from_user.id, MyStates.print_results)
-    print_results(message)
+    if data['selected_command'] != '/bestdeal':
+        print_results(message)
 
 
 # @bot.callback_query_handler(func=None, state=MyStates.print_results)
@@ -190,6 +185,9 @@ def print_results(message: Message):
         bot_sort = 'PRICE_HIGH_TO_LOW'
     elif data['selected_command'] == '/bestdeal':
         bot.set_state(message.from_user.id, MyStates.bestdeal)
+        bot.send_message(chat_id=message.from_user.id,
+                         text='минимальное расстояние от центра, где будем искать'
+                         )
         return
     payload = {
         "currency": "USD",
