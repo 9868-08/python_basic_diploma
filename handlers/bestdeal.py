@@ -37,7 +37,7 @@ def bestdeal_print_results(message: Message):
             диапазон цен
     """
     print("runing bestdeal print_results")
-    bot.delete_state(message.from_user.id, message.chat.id)
+#    bot.delete_state(message.from_user.id, message.chat.id)
     with bot.retrieve_data(message.from_user.id) as data:
         data['bestdeal_max'] = message.text
         msg = ("Ready, take a look:\n"
