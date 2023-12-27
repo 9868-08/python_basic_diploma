@@ -74,8 +74,8 @@ def bestdeal_print_results(message: Message):
         "resultsSize": 200,
         "sort": 'PRICE_LOW_TO_HIGH',
         "filters": {"DISTANCE": {
-            "max": data['bestdeal_min'],
-            "min": data['bestdeal_max']
+            "max": data['bestdeal_max'],
+            "min": data['bestdeal_min']
 
         }}
     }
