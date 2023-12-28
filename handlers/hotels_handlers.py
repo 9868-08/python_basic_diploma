@@ -1,6 +1,6 @@
 from builtins import print
 from datetime import date
-from telebot.types import Message, InlineKeyboardMarkup, InlineKeyboardButton, CallbackQuery
+from telebot.types import Message, CallbackQuery
 from telegram_bot_calendar import DetailedTelegramCalendar
 
 from rapidapi.get_info import api_request
@@ -9,38 +9,10 @@ from states.bot_states import MyStates
 import jsonpickle
 import json
 from database.bot_database import (history_put, history_list)
+from rapidapi.work_with_city import city_search
+from keyboard.bot_keyboard import city_markup
 # import handlers
-
-
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
-
-
-def city_search(city_name):
-    query_string = {'q': city_name, 'locale': 'en_US'}
-    response = api_request(method_endswith='locations/v3/search',
-                           params=query_string,
-                           method_type='GET')
-    if response:
-        cities = list()
-        for i in response['sr']:
-            if i['type'] == "CITY":
-                cities.append(
-                    dict(id=i['gaiaId'],
-                         region_name=i['regionNames']['fullName'])
-                )
-        return cities
-
-
-def city_markup(cities):
-    destinations = InlineKeyboardMarkup()
-    for city in cities:
-        destinations.add(
-            InlineKeyboardButton(text=city['region_name'],
-                                 callback_data=city['id']
-                                 )
-        )
-
-    return destinations
 
 
 @bot.message_handler(commands=['history'])

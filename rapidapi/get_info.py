@@ -1,11 +1,11 @@
-from json import JSONDecodeError
+# from json import JSONDecodeError
+# import requests
+# import json
 import requests
-import json
-import requests
-from loader import bot
-from states import bot_states
-import ast
-import os
+# from loader import bot
+# from states import bot_states
+# import ast
+# import os
 from config_data.config import RAPID_API_KEY
 
 
@@ -42,7 +42,8 @@ def get_request(url, params):
         print("Status Code", response.status_code)
         if response.status_code == 200:
             return response.json()
-    except ConnectionError as error:  # Так как указали таймаут может быть прокинута ошибка - from requests.exceptions import ConnectTimeout
+    except ConnectionError as error:  # Так как указали таймаут может быть прокинута ошибка -
+        # from requests.exceptions import ConnectTimeout
         print(error)  # Что-то делаем при возникновении ошибки
 
 
@@ -54,7 +55,8 @@ def post_request(method_endswith, payload):
         "X-RapidAPI-Host": "hotels4.p.rapidapi.com"
     }
 
-    response = requests.request("POST", "https://hotels4.p.rapidapi.com/"+method_endswith, json=payload, headers=headers)
+    response = requests.request("POST", "https://hotels4.p.rapidapi.com/"+method_endswith,
+                                json=payload, headers=headers)
     #    print(response.text)
     if response.status_code == 200:
         return response.json()

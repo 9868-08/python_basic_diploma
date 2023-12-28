@@ -12,16 +12,16 @@ def makeKeyboard(location_dict):
     return markup
 
 
-def city_markup(cities, inline_keyboard=None):
-    destinations = InlineKeyboardMarkup(inline_keyboard)
+def city_markup(cities):
+    destinations = InlineKeyboardMarkup()
     for city in cities:
         destinations.add(
             InlineKeyboardButton(text=city['region_name'],
                                  callback_data=city['id']
                                  )
         )
-
     return destinations
+
 
 
 @bot.callback_query_handler(func=lambda call: True)
