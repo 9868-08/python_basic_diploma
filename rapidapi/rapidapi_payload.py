@@ -4,21 +4,24 @@ from loader import bot
 
 def bot_payload(message):
     bot_sort = ""
+    with bot.retrieve_data(message.from_user.id) as data:
+        print(data['check_in'])
+        print(data['check_out'])
     payload = {
         "currency": "USD",
         "eapid": 1,
         "locale": "en_US",
         "siteId": 300000001,
         "destination": {"regionId": "6054439"},
-        "checkInDate": {
+        "checkInDate": {    # replace with values print(data['check_in'])
             "day": 10,
             "month": 10,
-            "year": 2023
+            "year": 2024
         },
-        "checkOutDate": {
+        "checkOutDate": {    # replace with values print(data['check_out'])
             "day": 15,
             "month": 10,
-            "year": 2023
+            "year": 2024
         },
         "rooms": [
             {
@@ -42,14 +45,14 @@ def bot_payload(message):
     for item in parsed_dict['properties']:
         if count > int(data['how_much_hotels']):
             break
-        data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
+            data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
             "currency": "USD",
             "eapid": 1,
             "locale": "en_US",
             "siteId": 300000001,
             "propertyId": item['id']
-        }  # дефолтые значения с сайта
+        }
         properties_v2_detail_responce = api_request('properties/v2/detail', payload, 'POST')
         data['address'] = (
             properties_v2_detail_responce)['data']['propertyInfo']['summary']['location']['address']['addressLine']
