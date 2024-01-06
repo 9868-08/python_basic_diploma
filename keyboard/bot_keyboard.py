@@ -1,5 +1,5 @@
 from telebot import types
-from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+#from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 from loader import bot
 import ast
 
