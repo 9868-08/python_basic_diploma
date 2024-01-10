@@ -7,6 +7,8 @@ def bot_payload(message):
     with bot.retrieve_data(message.from_user.id) as data:
         print(data['check_in'])
         print(data['check_out'])
+        if data['selected_command'] != "/bestdeal":
+            data['distanceFromDestination'] = 100
     payload = {
         "currency": "USD",
         "eapid": 1,

@@ -52,12 +52,13 @@ def city_answer(message: Message):
     cities = city_search(message.text)                      # Делаем запрос к API
     keyboard = city_markup(cities)                          # Формируем клавиатуры
 
+    bot.set_state(message.from_user.id, MyStates.location_confirmation)
     # Отправляем пользователю
     bot.send_message(chat_id=message.from_user.id,
                      text='Уточните, пожалуйста:',
                      reply_markup=keyboard
                      )
-    bot.set_state(message.from_user.id, MyStates.location_confirmation)
+
 
 
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)

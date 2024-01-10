@@ -1,19 +1,12 @@
-from database.bot_database import *
-from peewee import *
+from loader import bot
+import telegram
+from telebot.types import Message, CallbackQuery
 
 
-db_filename = 'database/bot_history.db'
-db = SqliteDatabase(db_filename)
-my_flag = "True"
-while my_flag == "True":
-    result = list()
-    query = Command.select()
-    for i in query:
-        result_tmp = (str(i.my_datetime), i.owner.name, i.owner.telegram_id, i.selected_command, i.result)
-        print('date_time=', str(i.my_datetime), 'name=', i.owner.name, 'relegram_id=', i.owner.telegram_id,
-              'owner_id', i.owner_id, 'selected_command', 'owner_id', i,
-              'selected_command', i.selected_command, 'searching_result=', i.result)
-        result.append(result_tmp)
-        if i.owner.telegram_id == 418832166:
-            my_flag = "False"
-db.close()
+bot.send_message(message.chat.id, msg, parse_mode="html")
+
+# bot.send_message(chat_id=chat_id, text="*bold* Example message",
+                parse_mode=telegram.constants.ParseMode.MARKDOWN_V2)
+
+# bot.send_message(chat_id=chat_id, text='<b>Example message</b>',
+                  parse_mode=telegram.ParseMode.HTML)

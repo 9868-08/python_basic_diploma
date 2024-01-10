@@ -1,5 +1,5 @@
 from telebot import types
-#from telegram import InlineKeyboardButton, InlineKeyboardMarkup
+from telebot.types import InlineKeyboardButton, InlineKeyboardMarkup
 from loader import bot
 import ast
 
@@ -23,7 +23,7 @@ def city_markup(cities):
     return destinations
 
 
-@bot.callback_query_handler(func=lambda call: True)
+# @bot.callback_query_handler(func=lambda call: True)
 def handle_query(call):
     if call.data.startswith("['value'"):
         print(f"call.data : {call.data} , type : {type(call.data)}")
