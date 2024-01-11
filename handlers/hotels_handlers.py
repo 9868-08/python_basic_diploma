@@ -100,11 +100,11 @@ def select_check_in(call_button):
         # Дата выбрана, сохраняем и создаем новый календарь с датой отъезда
         with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
             data['check_in'] = result
+        bot.set_state(call_button.from_user.id, MyStates.check_out)
         # формируем календарь
         calendar, step = create_calendar(call_button)
         # отправляем календарь пользователю
         bot.send_message(call_button.from_user.id, f"Укажите {step} выезда", reply_markup=calendar)
-        bot.set_state(call_button.from_user.id, MyStates.check_out)
 
 
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
@@ -119,10 +119,10 @@ def select_check_out(call_button):
         with bot.retrieve_data(call_button.from_user.id) as data:
             data['check_out'] = result
         bot.send_message(call_button.from_user.id, 'Введите количество отелей')
-    if data['selected_command'] != "/bestdeal":
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-    else:
-        bot.set_state(call_button.from_user.id, MyStates.bestdeal_distance_min_flag)
+    with bot.retrieve_data(call_button.from_user.id) as data:
+        if data['selected_command'] != "/bestdeal":
+            bot.set_state(call_button.from_user.id, MyStates.bestdeal_distance_min_flag)
     return
 
 
