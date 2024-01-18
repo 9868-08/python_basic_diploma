@@ -120,9 +120,10 @@ def select_check_out(call_button):
             data['check_out'] = result
         bot.send_message(call_button.from_user.id, 'Введите количество отелей')
         bot.set_state(call_button.from_user.id, MyStates.how_much_hotels)
-    with bot.retrieve_data(call_button.from_user.id) as data:
-        if data['selected_command'] != "/bestdeal":
-            bot.set_state(call_button.from_user.id, MyStates.bestdeal_distance_min_flag)
+        with bot.retrieve_data(call_button.from_user.id) as data:
+            if data['selected_command'] == "/bestdeal":
+                bot.set_state(call_button.from_user.id, MyStates.bestdeal_distance_min_flag)
+                bot.send_message(call_button.from_user.id, 'запускаю bestdeal_distance_min')
     return
 
 
