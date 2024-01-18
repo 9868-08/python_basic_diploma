@@ -60,7 +60,6 @@ def city_answer(message: Message):
                      )
 
 
-
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
 def location_processing(call_button: CallbackQuery):
     with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
