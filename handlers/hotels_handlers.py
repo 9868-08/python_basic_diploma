@@ -159,6 +159,7 @@ def print_results(message: Message):
     elif data['selected_command'] == '/highprice':
         bot_sort = 'PRICE_HIGH_TO_LOW'
     elif data['selected_command'] == '/bestdeal':
+        bot_sort = 'DISTANCE'
         bot.set_state(message.from_user.id, MyStates.bestdeal)
         bot.send_message(chat_id=message.from_user.id,
                          text='минимальное расстояние от центра, где будем искать'

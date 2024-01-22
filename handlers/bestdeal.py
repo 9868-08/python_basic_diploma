@@ -72,7 +72,7 @@ def bestdeal_print_results(message: Message):
         ],
         "resultsStartingIndex": 0,
         "resultsSize": 200,
-        "sort": 'PRICE_LOW_TO_HIGH',
+        "sort": 'DISTANCE',
         "filters": {"DISTANCE": {
             "max": data['bestdeal_max'],
             "min": data['bestdeal_min']
@@ -81,11 +81,16 @@ def bestdeal_print_results(message: Message):
     }
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')
     parsed_dict = hotel_id_json['data']['propertySearch']
+    with bot.retrieve_data(message.from_user.id) as asked_user_before:
+        pass
+
     # hotel_id_list = []
     founded_hotel = []
     count = 1
     for item in parsed_dict['properties']:
-        if count > int(data['how_much_hotels']):
+        if data['bestdeal_min'] < asked_user_before['bestdeal_min']:
+            continue
+        if data['bestdeal_max'] < asked_user_before['bestdeal_max'] or count > int(data['how_much_hotels']):
             break
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
