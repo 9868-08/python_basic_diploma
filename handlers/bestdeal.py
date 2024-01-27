@@ -81,16 +81,15 @@ def bestdeal_print_results(message: Message):
     }
     hotel_id_json = api_request('properties/v2/list', payload, 'POST')
     parsed_dict = hotel_id_json['data']['propertySearch']
-    with bot.retrieve_data(message.from_user.id) as asked_user_before:
-        pass
 
     # hotel_id_list = []
     founded_hotel = []
     count = 1
     for item in parsed_dict['properties']:
-        if data['bestdeal_min'] < asked_user_before['bestdeal_min']:
+        if item['destinationInfo']['distanceFromDestination']['value'] < float(data['bestdeal_min']):
             continue
-        if data['bestdeal_max'] < asked_user_before['bestdeal_max'] or count > int(data['how_much_hotels']):
+        if (item['destinationInfo']['distanceFromDestination']['value'] < float(data['bestdeal_max'])
+                or count > int(data['how_much_hotels'])):
             break
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {

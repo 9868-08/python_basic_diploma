@@ -39,7 +39,7 @@ def get_request(url, params):
             params=params,
             timeout=15
         )
-        print("Status Code", response.status_code)
+        print("Status Code", response.json())
         if response.status_code == 200:
             return response.json()
     except ConnectionError as error:  # Так как указали таймаут может быть прокинута ошибка -
