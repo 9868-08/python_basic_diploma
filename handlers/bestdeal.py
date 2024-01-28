@@ -86,10 +86,9 @@ def bestdeal_print_results(message: Message):
     founded_hotel = []
     count = 1
     for item in parsed_dict['properties']:
-        if item['destinationInfo']['distanceFromDestination']['value'] < float(data['bestdeal_min']):
+        if not item['destinationInfo']['distanceFromDestination']['value'] > float(data['bestdeal_min']):
             continue
-        if (item['destinationInfo']['distanceFromDestination']['value'] < float(data['bestdeal_max'])
-                or count > int(data['how_much_hotels'])):
+        if not item['destinationInfo']['distanceFromDestination']['value'] > float(data['bestdeal_max'] or count > int(data['how_much_hotels'])):
             break
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
@@ -112,6 +111,7 @@ def bestdeal_print_results(message: Message):
                        caption='фото в отеле ' + item['name'])
         count += 1
         founded_hotel.append(str(item['name']))
+        print("bestdeal_print_results finished")
     history_put(message.from_user.id, message.from_user.full_name, command=data['selected_command'],
                 result=founded_hotel)
     bot.delete_state(message.from_user.id, message.chat.id)
