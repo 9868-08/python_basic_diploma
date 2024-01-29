@@ -88,7 +88,9 @@ def bestdeal_print_results(message: Message):
     for item in parsed_dict['properties']:
         if not item['destinationInfo']['distanceFromDestination']['value'] > float(data['bestdeal_min']):
             continue
-        if not item['destinationInfo']['distanceFromDestination']['value'] > float(data['bestdeal_max'] or count > int(data['how_much_hotels'])):
+        if item['destinationInfo']['distanceFromDestination']['value'] > float(data['bestdeal_max']):
+            break
+        if count > int(data['how_much_hotels']):
             break
         data['distanceFromDestination'] = item['destinationInfo']['distanceFromDestination']['value']
         payload = {
