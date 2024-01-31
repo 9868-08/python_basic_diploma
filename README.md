@@ -45,14 +45,19 @@
 
 ***
 
-+ python-dotenv==0.21.1
-+ telebot~=0.0.4
-+ requests~=2.28.2
-+ peewee
-+ loguru
-+ jsonpickle
-+ python-telegram-bot
-+ python-telegram-bot-calendar
++ ﻿certifi==2023.11.17
++ charset-normalizer==3.3.2
++ idna==3.6
++ jsonpickle==3.0.2
++ peewee==3.17.0
++ pyTelegramBotAPI==4.15.3
++ python-dateutil==2.8.2
++ python-dotenv==1.0.1
++ python-telegram-bot-calendar==1.0.5
++ requests==2.31.0
++ six==1.16.0
++ telebot==0.0.5
++ urllib3==2.1.0
 
 
 ## Preparation and Launch
