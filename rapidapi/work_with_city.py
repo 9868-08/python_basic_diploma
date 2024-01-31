@@ -1,6 +1,7 @@
 from rapidapi.get_info import api_request
 
 
+# формируем локации по указанному городу
 def city_search(city_name):
     query_string = {'q': city_name, 'locale': 'en_US'}
     response = api_request(method_endswith='locations/v3/search',

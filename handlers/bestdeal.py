@@ -5,8 +5,10 @@ from rapidapi.get_info import api_request
 from database.bot_database import (history_put)
 
 
+# запрос от пользователя минимального растяния от центра
 @bot.message_handler(state=MyStates.bestdeal_distance_min_flag)
 def bestdeal_distance_min(message: Message):
+    """asks min distance from center to hotel"""
     print("bestdeal_distance_min running")
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['how_much_hotels'] = message.text
@@ -16,8 +18,10 @@ def bestdeal_distance_min(message: Message):
     bot.set_state(message.from_user.id, MyStates.bestdeal_distance_max_flag)
 
 
+# запрос от пользователя максимального растяния от центра
 @bot.message_handler(state=MyStates.bestdeal_distance_max_flag)
 def bestdeal_distance_max(message: Message):
+    """asks max distance from center to hotel"""
     print("bestdeal_distance_max running")
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
         data['bestdeal_min'] = message.text
@@ -28,13 +32,12 @@ def bestdeal_distance_max(message: Message):
     return
 
 
+# отправить в телеграм все отели с заданными параметрами
 @bot.message_handler(state=MyStates.bestdeal_print_results)
 def bestdeal_print_results(message: Message):
     """
     текстом выводит полученные от пользователя данные
     выводить описание и фотографии найденных отелей в количестве указанном пользователем
-    добавить: расстояние от центра
-            диапазон цен
     """
     print("runing bestdeal print_results")
 #    bot.delete_state(message.from_user.id, message.chat.id)

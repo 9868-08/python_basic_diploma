@@ -2,7 +2,10 @@ from playhouse.sqlite_ext import JSONField
 from datetime import datetime
 from peewee import *
 
-# import os
+"""
+Class that works in diploma
+"""
+
 
 db_filename = 'database/bot_history.db'
 db = SqliteDatabase(db_filename)
@@ -27,6 +30,7 @@ class Command(BaseModel):
     result = JSONField()
 
 
+# при добавлении записи в БД нужно получить идентификатор пользователя в нашей БД
 def check_user_in_db(telegram_id):
     print("selected check_user_in_db", telegram_id)
     result = (
@@ -41,6 +45,7 @@ def check_user_in_db(telegram_id):
     return None
 
 
+# сохраним в БД действия пользователя
 def history_put(telegram_id, full_name, command, result):
     user_id = check_user_in_db(telegram_id)
     if user_id is None:
@@ -57,6 +62,7 @@ def history_put(telegram_id, full_name, command, result):
     return ()
 
 
+# получение истории и БД
 def history_list(user_telegram_id):
     print("selected history_list with params:", user_telegram_id)
     user_id = check_user_in_db(user_telegram_id)
@@ -73,6 +79,4 @@ def history_list(user_telegram_id):
         result_lst.append(result_tmp)
     db.close()
     return result_lst
-
-# if os.path.isfile(db_filename):
-#    os.remove(db_filename)
+    

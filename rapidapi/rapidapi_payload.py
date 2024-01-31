@@ -2,8 +2,8 @@ from rapidapi.get_info import api_request
 from loader import bot
 
 
-def bot_payload(message):
-    bot_sort = ""
+# payload для запросов к rapidapi
+def bot_payload(message, bot_sort):
     with bot.retrieve_data(message.from_user.id) as data:
         print(data['check_in'])
         print(data['check_out'])

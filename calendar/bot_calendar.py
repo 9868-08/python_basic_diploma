@@ -3,10 +3,9 @@ from telegram_bot_calendar import DetailedTelegramCalendar
 from states.bot_states import MyStates
 from loader import bot
 
-# Создадим функцию генерирующую календарь
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
-
+# Создадим функцию генерирующую календарь
 def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
     if min_date is None:
         min_date = date.today()
@@ -28,8 +27,6 @@ def location(call_button):
     calendar, step = create_calendar(call_button)
     bot.send_message(..., f"Укажите {step} заезда", reply_markup=calendar)
 
-
-#    bot.set_state(
 
 # Ловим состояние выбора даты
 @bot.callback_query_handler(func=None, state=MyStates.check_in)

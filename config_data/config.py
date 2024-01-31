@@ -9,10 +9,6 @@ else:
 
 BOT_TOKEN = os.getenv('BOT_TOKEN')
 RAPID_API_KEY = os.getenv('RAPID_API_KEY')
-# import datetime
-# MONGO_DB_USERNAME = os.getenv('MONGO_DB_USERNAME')
-# MONGO_DB_PASSWORD = os.getenv('MONGO_DB_PASSWORD')
-# time_offset = datetime.timezone(datetime.timedelta(hours=3))
 
 DEFAULT_COMMANDS = (
     ('help', "Вывести справку"),

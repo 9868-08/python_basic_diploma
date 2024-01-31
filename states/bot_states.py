@@ -1,7 +1,7 @@
-# from telebot import State
 from telebot.handler_backends import State, StatesGroup  # States
 
 
+# состояния класса
 class MyStates(StatesGroup):
     city = State()
     how_much_hotels = State()

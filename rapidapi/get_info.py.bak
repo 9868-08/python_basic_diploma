@@ -1,8 +1,14 @@
+# from json import JSONDecodeError
+# import requests
+# import json
 import requests
+# from loader import bot
+# from states import bot_states
+# import ast
+# import os
 from config_data.config import RAPID_API_KEY
 
 
-# Функция, которая делает запросы к API
 def api_request(method_endswith,  # Меняется в зависимости от запроса. locations/v3/search либо properties/v2/list
                 params,  # Параметры, если locations/v3/search, то {'q': 'Рига', 'locale': 'en_US'}
                 method_type  # Метод\тип запроса GET\POST
@@ -22,7 +28,6 @@ def api_request(method_endswith,  # Меняется в зависимости �
         )
 
 
-# get запросы к API
 def get_request(url, params):
     try:
         response = requests.get(
@@ -42,7 +47,6 @@ def get_request(url, params):
         print(error)  # Что-то делаем при возникновении ошибки
 
 
-# post запросы к API
 def post_request(method_endswith, payload):
     from config_data.config import RAPID_API_KEY
     headers = {
@@ -57,3 +61,12 @@ def post_request(method_endswith, payload):
     if response.status_code == 200:
         return response.json()
     return response.json()
+
+
+def city_search(city_name):
+    query_string = {'q': city_name, 'locale': 'en_US'}
+    response = api_request(method_endswith='locations/v3/search',
+                           params=query_string,
+                           method_type='GET')
+
+    return response

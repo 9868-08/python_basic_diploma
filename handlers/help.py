@@ -1,4 +1,3 @@
-# from aiogram.types import Message, CallbackQuery, ContentTypes
 from loader import bot
 
 help_text = '<b>Поиск отелей:</b>\n' \
@@ -21,7 +20,6 @@ help_text = '<b>Поиск отелей:</b>\n' \
 
 
 @bot.message_handler(commands=['help'])
-#  @bot.message_handler(state=None, content_types=ContentTypes.ANY)
 def bot_echo(message):
     """Heandler that takes messages without a filter or state"""
     bot.send_message(message.from_user.id, help_text, parse_mode='HTML')

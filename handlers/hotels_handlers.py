@@ -11,11 +11,12 @@ import json
 from database.bot_database import (history_put, history_list)
 from rapidapi.work_with_city import city_search
 from keyboard.bot_keyboard import city_markup
-from rapidapi.rapidapi_payload import bot_payload
+# from rapidapi.rapidapi_payload import bot_payload
 # import handlers
 ALL_STEPS = {'y': 'год', 'm': 'месяц', 'd': 'день'}  # чтобы русифицировать сообщения
 
 
+# если запрошена команда /history
 @bot.message_handler(commands=['history'])
 def start_history_scenario(message: Message):
     message_dict = json.loads(jsonpickle.encode(message))
@@ -31,6 +32,7 @@ def start_history_scenario(message: Message):
         bot.send_message(message.chat.id, str(result) + '\n')
 
 
+# если запрошены компанды /lowprice /highprice /bestdeal
 @bot.message_handler(commands=['lowprice', 'highprice', 'bestdeal'])
 def start_scenario(message: Message):
     message_dict = json.loads(jsonpickle.encode(message))
@@ -44,6 +46,7 @@ def start_scenario(message: Message):
     bot.set_state(message.from_user.id, MyStates.city)
 
 
+# после выбора города сохраняем его в словарь data
 @bot.message_handler(state=MyStates.city)
 def city_answer(message: Message):
     with bot.retrieve_data(message.from_user.id) as data:   # Сохраняем имя города
@@ -60,9 +63,10 @@ def city_answer(message: Message):
                      )
 
 
+# Сохраняем выбранную локацию
 @bot.callback_query_handler(func=None, state=MyStates.location_confirmation)
 def location_processing(call_button: CallbackQuery):
-    with bot.retrieve_data(call_button.from_user.id) as data:  # Сохраняем выбранную локацию
+    with bot.retrieve_data(call_button.from_user.id) as data:
         data['city_id'] = call_button.data
     # формируем календарь
     calendar, step = create_calendar(call_button)
@@ -86,6 +90,7 @@ def create_calendar(callback_data, min_date=None, is_process=None, locale='ru'):
         return calendar, ALL_STEPS[step]
 
 
+# запрос даты заезда
 @bot.callback_query_handler(func=None, state=MyStates.check_in)
 def select_check_in(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
@@ -106,6 +111,7 @@ def select_check_in(call_button):
         bot.send_message(call_button.from_user.id, f"Укажите {step} выезда", reply_markup=calendar)
 
 
+# запрос даты выезда
 @bot.callback_query_handler(func=None, state=MyStates.check_out)
 def select_check_out(call_button):
     result, keyboard, step = create_calendar(call_button, is_process=True)
@@ -127,6 +133,7 @@ def select_check_out(call_button):
     return
 
 
+# сколько отелей показать?
 @bot.message_handler(state=MyStates.how_much_hotels)
 def how_much_hotels(message):
     with bot.retrieve_data(message.from_user.id) as data:
@@ -136,7 +143,7 @@ def how_much_hotels(message):
         print_results(message)
 
 
-# @bot.callback_query_handler(func=None, state=MyStates.print_results)
+# отправляем в телеграм полученные результаты
 @bot.message_handler(state=MyStates.print_results)
 def print_results(message: Message):
     """
@@ -159,13 +166,12 @@ def print_results(message: Message):
     elif data['selected_command'] == '/highprice':
         bot_sort = 'PRICE_HIGH_TO_LOW'
     elif data['selected_command'] == '/bestdeal':
-        bot_sort = 'DISTANCE'
         bot.set_state(message.from_user.id, MyStates.bestdeal)
         bot.send_message(chat_id=message.from_user.id,
                          text='минимальное расстояние от центра, где будем искать'
                          )
         return
-    payload, founded_hotel, hotel_id_json = rapidapi.rapidapi_payload.bot_payload(message)
+    payload, founded_hotel, hotel_id_json = rapidapi.rapidapi_payload.bot_payload(message, bot_sort)
 
     history_put(message.from_user.id, message.from_user.full_name, command=data['selected_command'],
                 result=founded_hotel)
