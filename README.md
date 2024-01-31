@@ -64,25 +64,8 @@
 
 ***
 
-1. Create your bot using the bot [@BotFather](https://t.me/BotFather ) and save your token
-2. Register in the cloud service [MongoDB Atlas](https://www.mongodb.com/atlas/database)
-
-> *For users from Russia, registration is possible using a VPN.  
-You can add Russian IP addresses to the list of IP addresses that have access to the database.*
-
-3. Create a file.env in the program directory and fill it in according to .env.template
+Create a file.env in the program directory and fill it in according to .env.template
 
 > *In the environment variables RAPID_API_KEY and ANOTHER_RAPID_API_KEY, two different keys should be specified for operation with the Hotels API (Or leave only RAPID_API_KEY, if you are sure that 500 requests per month will be enough).  
 The REQUESTS_LIMIT_REACHED parameter is "False" by default, there is no need to change it.  
 These parameters are created to change the API key when the request limit is used up*
-
-4. If you need to add your own exceptions, in which the user returns to the main menu, use the functions from the
-   file [work_with_errors.py ](/utils/misc/work_with_errors.py )
-5. Messages sent using commands contain photos for decoration.  
-   ![message_with_photo_example](message_with_photo_template.png)
-
-> *For convenience, photos are stored in Telegram. Sending is possible by the file_id of the photo. You can change photos to your own in the file [photos_in_telegram.py ](/photos/main_menu.png)  
-To get the file_id of your photo, use the following script:*
-
-
-> *The file id of the photo you sent to the bot will be output to the console. Now you can use the photo by its file id, storing it in Telegram.*
